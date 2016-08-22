@@ -91,12 +91,22 @@ class Post extends Model
     }
 
     /**
-     * Post has many reports.
+     * Post has many photos.
      *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function photos()
     {
         return $this->hasMany('App\Models\Photo', 'post_id');
+    }
+
+    /**
+     * Post has many notifications.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\Notification', 'post_id');
     }
 }

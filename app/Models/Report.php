@@ -13,7 +13,7 @@ class Report extends Model
      *
      * @var array
      */
-    protected $fillable = ['reporter_id', 'post_id', 'description',];
+    protected $fillable = ['reporter_id', 'post_id', 'description', 'processed'];
 
     /**
      * Report belongs to a user.

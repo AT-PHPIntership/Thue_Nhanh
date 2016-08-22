@@ -12,7 +12,7 @@ class Notification extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'type_id', 'notification', 'dismissed'];
+    protected $fillable = ['user_id', 'post_id', 'type_id', 'dismissed'];
 
     /**
      * Notification belongs to a notification type.
@@ -32,5 +32,15 @@ class Notification extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    /**
+     * Notification belongs to a post.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function post()
+    {
+        return $this->belongsTo('App\Models\Post', 'post_id');
     }
 }

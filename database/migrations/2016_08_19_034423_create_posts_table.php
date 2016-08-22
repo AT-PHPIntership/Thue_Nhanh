@@ -33,7 +33,7 @@ class CreatePostsTable extends Migration
             $table->time('time_end');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->json('chosen_days');
+            $table->json('chosen_days')->nullable();
             $table->integer('views')->default(0);
             $table->integer('reviewed_by')->unsigned()->nullable();
             $table->foreign('reviewed_by')->references('id')->on('users');

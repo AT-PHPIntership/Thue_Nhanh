@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name', 128);
             $table->string('email', 128)->unique();
             $table->string('password', 128);
-            $table->string('validation_code', 128)->default(str_random(32));
+            $table->string('validation_code', 128)->nullable();
             $table->boolean('activated')->default(0);
             $table->string('avatar')->default('default.jpg');
             $table->rememberToken();
