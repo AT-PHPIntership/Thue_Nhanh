@@ -19,6 +19,7 @@ class CreateReportsTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts');
             $table->string('description');
+            $table->boolean('processed')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
