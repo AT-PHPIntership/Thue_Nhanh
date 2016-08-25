@@ -1,0 +1,16 @@
+{
+  "name": "Thue_Nhanh",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/AT-PHPIntership/Thue_Nhanh",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public/bower_resources"
+  ]
+}
