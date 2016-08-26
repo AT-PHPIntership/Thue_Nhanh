@@ -1,0 +1,127 @@
+/* Set black background color, white text and some padding */
+footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}
+
+.navbar {
+    font-size: 15px;
+}
+
+.filter-result {
+    padding: 0px 15px 15px 0px;
+}
+
+.filter-item {
+    padding: 15px 0px 0px 15px;
+}
+
+.btn-filter {
+    background-color: #485563;
+    display: block;
+    width: 100%;
+}
+
+.btn-filter:hover {
+    background-color: #3f4e5d;
+}
+
+.pagination-row {
+    padding: 15px;
+}
+
+.nav-tabs {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #4e5d6c;
+}
+
+.post-thumbnail-outer {
+    padding: 0px 15px 0px 15px;
+}
+
+.post-thumbnail {
+    padding: 4px;
+    width: 150px;
+    height:150px;
+
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden
+}
+.post-thumbnail img {
+    flex-shrink:0;
+    max-width:100%;
+    max-height:100%
+}
+
+.fotter-item {
+    margin: 0px 5px 0px 20px;
+}
+
+.dropdown-menu {
+    border: 1px solid #4e5d6c;
+    background-color: rgba(43,62,80,0.80);
+}
+
+.dropdown-menu .divider {
+    background-color: #4e5d6c;
+}
+
+.dropdown-menu>li>a {
+    font-size: 14px;
+}
+
+.label-title h4 {
+    margin: 0px;
+}
+
+.label-price {
+    padding: 30px 0px 15px 0px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.label-location {
+    float: left;
+}
+
+.label-views {
+    float: right;
+}
+
+.group-footer {
+    padding-bottom: 17px;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.label-title {
+    float: left;
+}
+
+.label-time {
+    float: right;
+    font-size: 11px;
+}
+
+.group-title {
+    padding-bottom: 20px;
+}
+
+/* Back to top*/
+a.back-to-top {
+    display: none;
+    width: 48px;
+    height: 48px;
+    position: fixed;
+    z-index: 999;
+    right: 20px;
+    bottom: 20px;
+}
+
+.noti {
+    float: left;
+}
