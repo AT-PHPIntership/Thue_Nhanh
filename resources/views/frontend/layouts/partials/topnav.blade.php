@@ -26,9 +26,9 @@
           </form>
           {{-- @yield('navbar-menu') --}}
           @if(isset(Auth::user()->email))
-              @include('layouts.partials.usermenu')
+              @include('frontend.layouts.partials.usermenu')
           @else
-              @include('layouts.partials.guestmenu')
+              @include('frontend.layouts.partials.guestmenu')
           @endif
       </div>
     </div>

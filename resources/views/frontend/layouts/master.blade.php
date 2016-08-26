@@ -11,7 +11,7 @@
         @stack('style-sheets')
     </head>
     <body>
-        @include('layouts.partials.topnav')
+        @include('frontend.layouts.partials.topnav')
 
         <div class="container">
             <div class="row">
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        @include('layouts.partials.footer')
+        @include('frontend.layouts.partials.footer')
         <script src="/bower_resources/jquery/dist/jquery.min.js"></script>
         <script src="/bower_resources/bootstrap/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript">
