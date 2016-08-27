@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use App\Exceptions\InvalidConfirmationCodeException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,6 +49,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        switch ($e) {
+            case ($e instanceof InvalidConfirmationCodeException):
+                return $this->renderException($e);
+                break;
+
+            default:
+                return parent::render($request, $e);
+        }
+    }
+
+    /**
+     * Render the exception.
+     *
+     * @param Exception $e the exception to be rendered
+     *
+     * @return Response
+     */
+    public function renderException($e)
+    {
+        switch ($e) {
+            case ($e instanceof InvalidConfirmationCodeException):
+                return view('errors.404');
+                break;
+
+            default:
+                return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
+        }
     }
 }
