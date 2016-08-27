@@ -1,0 +1,47 @@
+.terms {
+    height: 390px;
+    overflow: scroll;
+}
+
+.agree-checkbox {
+    float: left;
+}
+
+.agreement {
+    margin-left: 5px;
+}
+
+.btn-block {
+    display: block;
+}
+
+.hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 90%;
+    background-color: #596a7b;
+    height: 1px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-fb {
+    background-color: #3B5994;
+}
+
+.btn-fb:hover {
+    background-color: #294885;
+}
+
+.form-header {
+    padding-left: 15px;
+}
+
+.red {
+    color: red;
+}
+
+.validetta-bubble {
+    background-color: rgba(205, 46, 38, 0.8);
+}

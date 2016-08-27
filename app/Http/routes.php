@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('frontend.layouts.master');
 });
+
+Route::auth();
+
+Route::get('register/verify/{id}/{validationCode}', [
+    'as' => 'auth.verify',
+    'uses' => 'Auth\AuthController@confirm'
+]);
