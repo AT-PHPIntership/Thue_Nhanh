@@ -18,6 +18,6 @@
       <li role="presentation"><a role="menuitem" href="#">@lang('common.header.profile')</a></li>
       <li role="presentation"><a role="menuitem" href="#">@lang('common.header.all_posts')</a></li>
       <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" href="#">@lang('common.header.logout')</a></li>
+      <li role="presentation"><a role="menuitem" href="{{route('logout')}}">@lang('common.header.logout')</a></li>
     </ul>
 </div>

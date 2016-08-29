@@ -10,6 +10,7 @@
 
 <!-- Display successful message -->
 @if (session()->has('email'))
+<div class="col-md-12">
     <div class="alert alert-success">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <ul>
@@ -19,6 +20,7 @@
           <li><a href="{{ url('/login') }}">@lang('frontend.auth.rediect')</a></li>
         </ul>
     </div>
+</div>
 @endif
 
 <!-- Registration form -->
@@ -49,7 +51,7 @@
 		</div>
 
 		<div class="form-group col-sm-12">
-			<input type="checkbox" class="checkbox agree-checkbox" data-validetta="required"/> <span class="agreement"> @lang('frontend.auth.agreement_text')</span>
+			<input type="checkbox" class="checkbox agree-checkbox" id="agree-checkbox" data-validetta="required"/> <label for="agree-checkbox" class="agreement"> @lang('frontend.auth.agreement_text')</label>
 		</div>
 
         <div class="hr center-block"></div>
