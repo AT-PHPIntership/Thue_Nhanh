@@ -30,10 +30,10 @@
 
         {{ csrf_field() }}
 
-		<div class="form-group col-lg-12">
-			<label>@lang('frontend.auth.username')<span class="red">&nbsp;&ast;</span></label>
-			<input type="text" name="username" class="form-control" data-validetta="required,minLength[2],maxLength[128]" value="">
-		</div>
+        <div class="form-group col-lg-12">
+            <label>@lang('frontend.auth.username')<span class="red">&nbsp;&ast;</span></label>
+            <input type="text" name="username" class="form-control" data-validetta="required,minLength[2],maxLength[128]" value="">
+        </div>
 
         <div class="form-group col-lg-12">
             <label>@lang('frontend.auth.email')<span class="red">&nbsp;&ast;</span></label>
@@ -57,16 +57,14 @@
         <div class="hr center-block"></div>
 
         <div class="form-group col-lg-6">
-            <button type="button" class="btn btn-block btn-fb" name="signin"><i class="fa fa-facebook-square"></i> &nbsp;@lang('frontend.auth.sign_in_fb')</button>
+            <a href="{{route('social.login', ['facebook'])}}" class="btn btn-block btn-fb no-underline"><i class="fa fa-facebook-square"></i> &nbsp;@lang('frontend.auth.sign_in_fb')</a>
         </div>
 
         <div class="form-group col-lg-6">
             <button type="submit" class="btn btn-primary btn-block" name="signup">@lang('frontend.auth.signup')</button>
         </div>
     </form>
-
 </div> <!--/ Registration form -->
-
 
 <div class="col-sm-6 col-xs-12 terms">
     <h3>@lang('frontend.auth.terms_and_conditions')</h3>

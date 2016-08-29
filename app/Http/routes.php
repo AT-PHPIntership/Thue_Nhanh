@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('frontend.layouts.master');
-});
+})->name('home');
 
 Route::auth();
 
@@ -27,8 +27,9 @@ Route::get('/register', ['uses' => 'Auth\AuthController@showRegistrationForm', '
 
 Route::post('/register', ['uses' => 'Auth\AuthController@register', 'as' => 'auth.register']);
 
+Route::get('register/verify/{id}/{validationCode}', ['uses' => 'Auth\AuthController@confirm', 'as' => 'auth.verify']);
 
-Route::get('register/verify/{id}/{validationCode}', [
-    'as' => 'auth.verify',
-    'uses' => 'Auth\AuthController@confirm'
-]);
+// Signin via facebook api
+Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
+
+Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');

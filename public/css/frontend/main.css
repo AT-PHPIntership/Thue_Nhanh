@@ -45,3 +45,8 @@
 .validetta-bubble {
     background-color: rgba(205, 46, 38, 0.8);
 }
+
+.no-underline {
+    text-decoration: none;
+    color: inherit;
+}

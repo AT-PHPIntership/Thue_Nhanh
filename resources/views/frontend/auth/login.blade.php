@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group col-lg-12">
-            <button type="button" class="btn btn-block btn-fb" name="signin"><i class="fa fa-facebook-square"></i> &nbsp;@lang('frontend.auth.sign_in_fb')</button>
+            <a href="{{route('social.login', ['facebook'])}}" class="btn btn-block btn-fb no-underline"><i class="fa fa-facebook-square"></i> &nbsp;@lang('frontend.auth.sign_in_fb')</a>
         </div>
 
         <div class="hr center-block"></div>
