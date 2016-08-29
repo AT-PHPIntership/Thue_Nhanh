@@ -25,4 +25,7 @@ return [
         'item_youtube' => 'Youtube',
         'item_google_plus' => 'Google Plus',
     ],
+    'errors' => [
+        '404_mgs' => 'Không tìm thấy trang yêu cầu.',
+    ],
 ];

@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Transformable
 {
+    use TransformableTrait;
+
     protected $table = 'users';
 
     /**
@@ -33,7 +38,7 @@ class User extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany('App\Models\Role', 'user_roles', 'user_id', 'role_id');
+        return $this->belongsToMany('App\Models\Role', 'user_roles');
     }
 
     /**

@@ -15,7 +15,8 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-2 well text-center">
+                @yield('main-content')
+                {{-- <div class="col-sm-2 well text-center">
                     @yield('tips')
                 </div>
                 <div class="col-sm-7">
@@ -23,7 +24,7 @@
                 </div>
                 <div class="col-sm-3 well text-center">
                     @yield('ads')
-                </div>
+                </div> --}}
             </div>
         </div>
 
