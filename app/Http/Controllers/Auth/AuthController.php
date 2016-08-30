@@ -15,6 +15,9 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\InvalidConfirmationCodeException;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
 
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+
 class AuthController extends Controller
 {
     /*
@@ -103,13 +106,9 @@ class AuthController extends Controller
         try {
             Mail::send('frontend.auth.email.verify', $data, function ($message) use ($user) {
                 $message->to($user->email, $user->username)
-                ->subject(trans('frontend.auth.verify_header'));
+                        ->subject(trans('frontend.auth.verify_header'));
             });
-            if (count(Mail::failures())) {
-                return false;
-            } else {
-                return true;
-            }
+            return count(Mail::failures()) > 0 ? false : true;
         } catch (Exception $e) {
             return false;
         }
@@ -204,5 +203,136 @@ class AuthController extends Controller
 
         return redirect()->route('login')
                          ->withMessage(trans('frontend.auth.activated'));
+    }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @param string $provider the provider (facebook)
+     *
+     * @return Response
+     */
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @param string $provider the provider (facebook)
+     *
+     * @return Response
+     */
+    public function handleProviderCallback($provider)
+    {
+        $fbUser = Socialite::driver($provider)->user();
+
+        $data = [
+            'name' => $fbUser->name,
+            'email' => $fbUser->email,
+            'avatar' => $fbUser->avatar,
+        ];
+
+        $user = $this->firstOrCreate($data);
+
+        if (!$user) {
+            return redirect()->route('login')->withErrors(trans('frontend.auth.failure_creating'));
+        }
+
+        Auth::loginUsingId($user->id);
+
+        return redirect()->route('home');
+    }
+
+    /**
+     * Find the user by email or create account if user doesn't exist.
+     *
+     * @param array $data user's data
+     *
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    protected function firstOrCreate($data)
+    {
+        $user = $this->user->findByField('email', $data['email'])->first();
+        if (!$user) {
+            // Create a new account with random password.
+            $defaultPassword = time();
+            $user = $this->user->create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($defaultPassword),
+                'validation_code' => null,
+                'activated' => \Config::get('common.ACTIVATED'),
+            ]);
+
+            // Download the avatar form facebook.
+            $avatarPath = public_path() . \Config::get('common.AVATAR_PATH');
+
+            if ($this->downloadAvatar($data['avatar'], $avatarPath, $user)) {
+                $user->avatar = $user->id . '.jpg';
+                $user->save();
+            }
+
+            // Send the default password to user's email.
+            $accountInfo = [
+                'email' => $data['email'],
+                'password' => $defaultPassword,
+            ];
+
+            if ($this->sendPasswordToMail($accountInfo, $user)) {
+                return $user;
+            } else {
+                // Undo creating user (hard delete).
+                $this->user->delete($user['id']);
+                return null;
+            }
+        }
+        return $user;
+    }
+
+    /**
+     * Send the default password to user's email.
+     *
+     * @param array                  $data parameters
+     * @param UserRepositoryEloquent $user the user
+     *
+     * @return boolean
+     */
+    protected function sendPasswordToMail(array $data, $user)
+    {
+        try {
+            Mail::send('frontend.auth.email.default_password', $data, function ($message) use ($user) {
+                $message->to($user->email, $user->username)
+                        ->subject(trans('frontend.auth.update_pass'));
+            });
+            return count(Mail::failures()) > 0 ? false : true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Download the avatar form facebook to server.
+     *
+     * @param string                             $from     from address
+     * @param string                             $toFolder to folder
+     * @param Illuminate\Database\Eloquent\Model $user     the owner
+     *
+     * @return boolean
+     */
+    protected function downloadAvatar($from, $toFolder, $user)
+    {
+        $filePath = $toFolder . '/' . $user->id . '.jpg';
+        // Make the directory if there's no one.
+        if (!file_exists($toFolder)) {
+            mkdir($toFolder, \Config::get('common.FILE_MODE'), true);
+        }
+        // Download the avatar to `public/file/avatar/<user_id>.jpg`
+        set_time_limit(\Config::get('common.NO_TIME_LIMIT'));
+        $imageString = file_get_contents($from);
+        file_put_contents($filePath, $imageString);
+
+        return file_exists($filePath);
     }
 }

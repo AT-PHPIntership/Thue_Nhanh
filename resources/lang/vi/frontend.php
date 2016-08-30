@@ -27,6 +27,15 @@ return [
         'remember' => 'Ghi nhớ đăng nhập',
         'login_fails' => 'Sai email hoặc mật khẩu, hoặc tài khoản chưa được kích hoạt!',
         'forget_pass' => 'Quên mật khẩu?',
+        'update_pass' => 'Cập nhật Mật khẩu để hoàn tất đăng ký',
+        'sign_success' => 'Đăng nhập thành công, kiểm tra email để xem mật khẩu đăng nhập.',
+        'change_pass' => [
+            'header' => 'Cám ơn bạn đã đăng nhập tài khoản tại thuenhanh.net',
+            'body_p1' => 'Thông tin đăng nhập của bạn như sau:',
+            'email' => 'Email:',
+            'password' => 'Mật khẩu:',
+            'body_p2' => 'Để đảm bảo tính bảo mật, bạn vui lòng đăng nhập và đổi lại mật khẩu.',
+        ]
 
     ],
 ];
