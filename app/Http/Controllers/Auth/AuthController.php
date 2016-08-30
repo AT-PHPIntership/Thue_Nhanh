@@ -144,7 +144,7 @@ class AuthController extends Controller
         $validator = $this->validator($input);
 
         if ($validator->fails()) {
-            return redirect()->action('Auth\AuthController@showRegistrationForm')
+            return redirect()->route('register')
                              ->withErrors($validator);
         }
 
@@ -161,17 +161,17 @@ class AuthController extends Controller
             ];
 
             if ($this->sendVerificationMail($data, $user)) {
-                return redirect()->action('Auth\AuthController@showRegistrationForm')
+                return redirect()->route('register')
                                  ->withEmail($user->email);
             } else {
                 // Destroy the missing user (hard delete).
                 $this->user->delete($data['id']);
 
-                return redirect()->action('Auth\AuthController@showRegistrationForm')
+                return redirect()->route('register')
                                  ->withErrors(trans('frontend.auth.failure_sending'));
             }
         } catch (Exception $e) {
-            return redirect()->action('Auth\AuthController@showRegistrationForm')
+            return redirect()->route('register')
                              ->withErrors(trans('frontend.auth.failure_creating'));
         }
     }
@@ -202,17 +202,7 @@ class AuthController extends Controller
             }
         }
 
-        return redirect()->action('Auth\AuthController@showLoginForm')
+        return redirect()->route('login')
                          ->withMessage(trans('frontend.auth.activated'));
-    }
-
-    /**
-     * Show the application login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm()
-    {
-        return view('frontend.auth.login');
     }
 }

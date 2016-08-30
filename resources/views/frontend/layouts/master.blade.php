@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>@yield('page-title') @lang('common.layouts.title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css">
+        <link rel="stylesheet" href="/bower_resources/bootswatch/superhero/bootstrap.min.css">
         <link href="/bower_resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!-- Custom Css -->
         <link rel="stylesheet" href="/css/master.css">

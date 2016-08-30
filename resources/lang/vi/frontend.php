@@ -22,5 +22,11 @@ return [
         'activated' => 'Xác nhận thành công, bạn có thể đăng nhập ngay bây giờ.',
         'failure_sending' => 'Có lỗi xảy ra, không thể gửi đi email xác nhận. Vui lòng thử lại!',
         'failure_creating' => 'Có lỗi xảy ra, tài khoản chưa được tạo. Vui lòng thử lại!',
+        'login' => 'Đăng Nhập',
+        'or' => 'Hoặc',
+        'remember' => 'Ghi nhớ đăng nhập',
+        'login_fails' => 'Sai email hoặc mật khẩu, hoặc tài khoản chưa được kích hoạt!',
+        'forget_pass' => 'Quên mật khẩu?',
+
     ],
 ];
