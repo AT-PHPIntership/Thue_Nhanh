@@ -33,3 +33,5 @@ Route::get('register/verify/{id}/{validationCode}', ['uses' => 'Auth\AuthControl
 Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
 
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
+
+Route::resource('post', 'PostController');

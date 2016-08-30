@@ -10,7 +10,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#"><i class="fa fa-home"></i> @lang('common.header.home')</a></li>
         <li>
-          <a href="#"><i class="fa fa-cloud-upload"></i> @lang('common.header.create') <sup><span class="label label-success">@lang('common.header.label_free')</span></sup></a>
+          <a href="{{route('post.create')}}"><i class="fa fa-cloud-upload"></i> @lang('common.header.create') <sup><span class="label label-success">@lang('common.header.label_free')</span></sup></a>
         </li>
       </ul>
       <div class="navbar-right">
