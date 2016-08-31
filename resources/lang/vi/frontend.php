@@ -66,6 +66,10 @@ return [
             'to' => 'Đến',
             'submit' => 'Đăng Tin',
             'browse' => 'Chọn tệp...',
+            'add_eg' => 'VD: 30 Ngô Thì Nhậm, Liên Chiểu, Đà Nẵng',
+            'city_placeholder' => 'Chọn tỉnh/thành phố',
+            'unsupport_geolocation' => 'Trình duyệt của bạn không hỗ trợ lấy vị trí hiện tại.',
+            '' => '',
             '' => '',
         ],
 

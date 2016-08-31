@@ -50,3 +50,7 @@
     text-decoration: none;
     color: inherit;
 }
+
+.toggle-img {
+    display: none;
+}

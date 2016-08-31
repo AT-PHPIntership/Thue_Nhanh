@@ -7,4 +7,6 @@ return [
     'AVATAR_PATH' => '/file/avatar',
     'FILE_MODE' => 0777,
     'NO_TIME_LIMIT' => 0,
+    'FOR_RENT_VAL' => 1,
+    'NEED_RENT_VAL' => 0,
 ];
