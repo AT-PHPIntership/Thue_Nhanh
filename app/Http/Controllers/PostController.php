@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use App\Http\Requests;
 use App\Repositories\Eloquent\PostRepositoryEloquent;
+use App\Repositories\Eloquent\UserRepositoryEloquent;
+use App\Repositories\Eloquent\CityRepositoryEloquent;
+use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 
 class PostController extends Controller
 {
@@ -17,13 +20,40 @@ class PostController extends Controller
     protected $post;
 
     /**
+     * The category Repository eloquent instance.
+     *
+     * @var CategoryRepositoryEloquent
+     */
+    protected $category;
+
+    /**
+     * The user Repository eloquent instance.
+     *
+     * @var CategoryRepositoryEloquent
+     */
+    protected $user;
+
+    /**
+     * The city Repository eloquent instance.
+     *
+     * @var CategoryRepositoryEloquent
+     */
+    protected $city;
+
+    /**
      * Create a new post controller instance.
      *
      * @param PostRepositoryEloquent $post the post repository eloquent
      */
-    public function __construct(PostRepositoryEloquent $post)
+    public function __construct(PostRepositoryEloquent $post,
+                                CategoryRepositoryEloquent $category,
+                                UserRepositoryEloquent $user,
+                                CityRepositoryEloquent $city)
     {
         $this->post = $post;
+        $this->category = $category;
+        $this->user = $user;
+        $this->city = $city;
     }
 
     /**
@@ -43,7 +73,25 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('frontend.posts.create');
+        $data = [];
+
+        $data['postTypes'] = [
+            \Config::get('common.FOR_RENT_VAL')  => trans('frontend.post.create.for_rent'),
+            \Config::get('common.NEED_RENT_VAL') => trans('frontend.post.create.need_rent')
+        ];
+
+        $data['categories'] = $this->category->scopeQuery(function($query){
+            return $query->orderBy('name','asc');
+        })->all();
+
+        $data['currentUser'] = $this->user->find(Auth::user()->id);
+        $data['currentUser'] != null ? $data['currentUser'] = $data['currentUser']->profile : null;
+
+        $data['cities'] = $this->city->all();
+
+        // dd(Auth::user()->id, $data['currentUser'], $data['cities']);
+
+        return view('frontend.posts.create')->with($data);
     }
 
     /**

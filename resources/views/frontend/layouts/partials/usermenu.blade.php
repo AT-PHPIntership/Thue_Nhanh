@@ -1,5 +1,5 @@
 <div class="dropdown nav navbar-nav">
-    <li class="dropdown-toggle" style="" data-toggle="dropdown">
+    <li class="menu-dropdown-toggle" style="" data-toggle="dropdown">
       <a href="#">
         <i class="fa fa-user"></i> {{Auth::user()->name}}
         <sup><span class="label label-success"></span></sup>

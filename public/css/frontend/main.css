@@ -62,7 +62,6 @@
 .dropdown-toggle:hover {
     background-color: #fff;
 }
-
 .btn-default:active:hover,
 .btn-default.active:hover,
 .open>.dropdown-toggle.btn-default:hover,
@@ -80,11 +79,11 @@
 .open>.dropdown-toggle.btn-default {
     background-color: #fff;
 }
-
 .btn-default:focus,
 .btn-default.focus {
     background-color: #fff;
 }
+
 
 .filter-option {
     color: #2b3e50;

@@ -24,8 +24,9 @@
           <label for="type" class="col-md-3 control-label">@lang('frontend.post.create.post_type')</label>
           <div class="col-md-9">
             <select class="form-control" id="type">
-              <option value="{{\Config::get('common.FOR_RENT_VAL')}}">@lang('frontend.post.create.for_rent')</option>
-              <option value="{{\Config::get('common.NEED_RENT_VAL')}}">@lang('frontend.post.create.need_rent')</option>
+              @foreach($postTypes as $type => $value)
+                <option value="{{$type}}">{{$value}}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -33,8 +34,9 @@
             <label for="category" class="col-md-3 control-label">@lang('frontend.post.create.category')</label>
             <div class="col-md-9">
               <select class="form-control" id="category">
-                <option value="1">Nhà đất</option>
-                <option value="0">Xe cộ</option>
+                @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
               </select>
             </div>
         </div>
@@ -42,29 +44,33 @@
         <div class="form-group col-md-12">
             <label for="name" class="col-md-3 control-label">@lang('frontend.post.create.name')</label>
             <div class="col-md-9">
-                <input type="text" name="name" id="name" class="form-control" disabled required>
+                <input type="text" name="name" id="name" class="form-control" disabled required value="{{Auth::user()->name}}">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label for="phone" class="col-md-3 control-label">@lang('frontend.post.create.phone')</label>
             <div class="col-md-9">
-                <input type="text" name="phone" id="phone" class="form-control" required maxlength="15">
+                <input type="text" name="phone" id="phone" class="form-control" required maxlength="15" value="{{ null == $currentUser ? '' : $currentUser->phone_number}}">
             </div>
         </div>
         <div class="form-group  col-md-12">
           <label for="city" class="col-md-3 control-label">@lang('frontend.post.create.city')</label>
           <div class="col-md-9">
             <select class="selectpicker form-control" id="city" data-live-search="true">
-              <option value="1">Hanoi</option>
-              <option value="0">HCM</option>
-              <option value="0">Danang</option>
+              @foreach($cities as $city)
+                @if(null != $currentUser && $city->id == $currentUser->city_id)
+                  <option value="{{$city->id}}" selected>{{$city->name}}</option>
+                @else
+                  <option value="{{$city->id}}">{{$city->name}}</option>
+                @endif
+              @endforeach
             </select>
           </div>
         </div>
         <div class="form-group col-md-12">
             <label for="location-address" class="col-md-3 control-label">@lang('frontend.post.create.address')</label>
             <div class="col-md-9">
-                <input type="text" name="address" class="form-control" id="location-address" placeholder="@lang('frontend.post.create.add_eg')">
+                <input type="text" name="address" class="form-control" id="location-address" placeholder="@lang('frontend.post.create.add_eg')" value="{{null == $currentUser ? '' : $currentUser->address}}">
                 <div class="hidden">
                     Radius: <input type="text" name="radius" id="location-radius"/>
                     <br>
