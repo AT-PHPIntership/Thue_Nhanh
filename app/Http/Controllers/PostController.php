@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Storage;
+use Exception;
 use App\Http\Requests;
 use App\Repositories\Eloquent\PostRepositoryEloquent;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
@@ -89,8 +91,6 @@ class PostController extends Controller
 
         $data['cities'] = $this->city->all();
 
-        // dd(Auth::user()->id, $data['currentUser'], $data['cities']);
-
         return view('frontend.posts.create')->with($data);
     }
 
@@ -105,7 +105,7 @@ class PostController extends Controller
         $photos = $request->file('photos');
         if (!empty($photos)) {
             foreach ($photos as $photo) {
-                \Storage::disk('storage')->put(
+                Storage::disk('storage')->put(
                     \Config::get('common.POST_PHOTOS_PATH') . $photo->getClientOriginalName(),
                     file_get_contents($photo)
                 );
@@ -113,6 +113,58 @@ class PostController extends Controller
         }
         dd('OK');
         //dd($request->all());
+    }
+
+    /**
+     * Store the uploaded images to `storage\app\public\images\posts\<filename>`.
+     *
+     * @param string                 $fieldName the name of HTML input tag
+     * @param PostRepositoryEloquent $post      the instance of post repository
+     * @param Request                $request   the request
+     *
+     * @return boolean
+     */
+    protected function uploadImage($fieldName, PostRepositoryEloquent $post, Request $request)
+    {
+        try {
+            $photos = $request->file($fieldName);
+            if (!empty($photo)) {
+                $fileName = str_limit(str_slug($post->title), \Config::get('common.FILE_NAME_LIMIT'), '~');
+                foreach ($photos as $index => $photo) {
+                    $filePath = \Config::get('common.POST_PHOTOS_PATH').$fileName.$index.'.'.getClientOriginalExtension();
+                    Storage::disk('storage')->put($filePath,file_get_contents($photo));
+                    // resize the file to save storage space.
+                    $this->resize($filePath);
+                }
+            }
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Resize the uploaded image keep aspect ratio.
+     *
+     * @param  string $filePath The path to image file
+     *
+     * @return void
+     */
+    protected function resize($filePath)
+    {
+        $img = Image::make($filePath);
+        $imgW = $img->width();
+        $imgH = $img->height();
+
+        if ($imgH > \Config::get('common.IMG_MAX_HEIGHT')) {
+            $img->resize(null, \Config::get('common.IMG_MAX_HEIGHT'), function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        } elseif ($imgW > \Config::get('common.IMG_MAX_WIDTH')) {
+            $img->resize(\Config::get('common.IMG_MAX_WIDTH'), null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
     }
 
     /**

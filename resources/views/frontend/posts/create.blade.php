@@ -5,7 +5,6 @@
 @endsection
 
 @section('main-content')
-<img src="/images/posts/laravel-5-2-docs.jpg" alt="asama" />
 <!--Ads section-->
 <div class="col-sm-2 text-center">
 
@@ -73,10 +72,10 @@
             <div class="col-md-9">
                 <input type="text" name="address" class="form-control" id="location-address" placeholder="@lang('frontend.post.create.add_eg')" value="{{null == $currentUser ? '' : $currentUser->address}}">
                 <div class="hidden">
-                    Radius: <input type="text" name="radius" id="location-radius"/>
+                    <input type="text" name="radius" id="location-radius"/>
                     <br>
-                    Lat.: <input type="text" name="lat" id="location-lat"/>
-                    Long.: <input type="text" name="lng" id="location-lon"/>
+                    <input type="text" name="lat" id="location-lat"/>
+                    <input type="text" name="lng" id="location-lon"/>
                 </div>
             </div>
         </div>
@@ -105,7 +104,6 @@
               <label class="btn btn-primary btn-file" for="photos">
                 @lang('frontend.post.create.browse')
                 <input type="file" name="photos[]" id="photos" multiple style="display: none;">
-                {{-- {!! Form::file('photos[]', ['multiple' => true]) !!} --}}
               </label>
               <div class="toggle-img">
                   <i id="toggle-btn" class="fa fa-angle-double-up pull-right btn btn-xs btn-primary"></i>

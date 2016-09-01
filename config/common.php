@@ -10,4 +10,7 @@ return [
     'FOR_RENT_VAL' => 1,
     'NEED_RENT_VAL' => 0,
     'POST_PHOTOS_PATH' => '/images/posts/',
+    'FILE_NAME_LIMIT' => 40,
+    'IMG_MAX_HEIGHT' => 500,
+    'IMG_MAX_WIDTH' => 1000,
 ];
