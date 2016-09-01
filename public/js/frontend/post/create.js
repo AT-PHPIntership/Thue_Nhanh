@@ -30,17 +30,19 @@
                   latitude: position.coords.latitude,
                   longitude: position.coords.longitude
                 };
+                $('#location').locationpicker('location', defaultPos);
             });
         } else {
             alert(lang.post.create.unsupport_geolocation);
+            $('#location').locationpicker('location', defaultPos);
         }
-        $('#location').locationpicker('location', defaultPos);
     });
 <!-- /LocationPicker -->
 
 <!-- Tinymce -->
     tinymce.init({
-        selector:'#content'
+        selector:'#content',
+        // menubar: "false"
     });
 <!-- /Tinymce -->
 
@@ -51,7 +53,7 @@ $(document).ready(function() {
     var toggle_img = $('.toggle-img');
     var image_holder = $("#image-holder");
     var toggle_btn = $('#toggle-btn');
-    $("#photo").on('change', function() {
+    $("#photos").on('change', function() {
         //Get count of selected files
         var countFiles = $(this)[0].files.length;
 

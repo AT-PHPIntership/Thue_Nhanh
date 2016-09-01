@@ -5,6 +5,7 @@
 @endsection
 
 @section('main-content')
+<img src="/images/posts/laravel-5-2-docs.jpg" alt="asama" />
 <!--Ads section-->
 <div class="col-sm-2 text-center">
 
@@ -18,7 +19,7 @@
     <div class="form-group col-md-12">
         <hr>
     </div>
-    <form id="create-post" action="{{route('post.create')}}" method="post">
+    <form id="create-post" action="{{route('post.store')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group  col-md-12">
           <label for="type" class="col-md-3 control-label">@lang('frontend.post.create.post_type')</label>
@@ -99,10 +100,12 @@
             </div>
         </div>
         <div class="form-group col-md-12">
-            <label for="photo" class="col-md-3 control-label">@lang('frontend.post.create.photo')</label>
+            <label for="photos" class="col-md-3 control-label">@lang('frontend.post.create.photo')</label>
             <div class="col-md-9">
-              <label class="btn btn-primary btn-file" for="photo">
-                @lang('frontend.post.create.browse') <input type="file" id="photo" multiple style="display: none;">
+              <label class="btn btn-primary btn-file" for="photos">
+                @lang('frontend.post.create.browse')
+                <input type="file" name="photos[]" id="photos" multiple style="display: none;">
+                {{-- {!! Form::file('photos[]', ['multiple' => true]) !!} --}}
               </label>
               <div class="toggle-img">
                   <i id="toggle-btn" class="fa fa-angle-double-up pull-right btn btn-xs btn-primary"></i>
@@ -184,7 +187,7 @@
 <script src="/js/frontend/post/create.js"></script>
 
 <!-- GoogleMap API -->
-<script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
 @endpush
 
 @push('style-sheets')

@@ -9,4 +9,5 @@ return [
     'NO_TIME_LIMIT' => 0,
     'FOR_RENT_VAL' => 1,
     'NEED_RENT_VAL' => 0,
+    'POST_PHOTOS_PATH' => '/images/posts/',
 ];

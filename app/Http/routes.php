@@ -34,8 +34,6 @@ Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@r
 
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
 
-Route::resource('post', 'PostController');
-
-Route::get('/mylocation', function () {
-    return view('frontend.posts.create_');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('post', 'PostController');
 });

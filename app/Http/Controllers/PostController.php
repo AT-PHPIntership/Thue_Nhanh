@@ -102,7 +102,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $photos = $request->file('photos');
+        if (!empty($photos)) {
+            foreach ($photos as $photo) {
+                \Storage::disk('storage')->put(
+                    \Config::get('common.POST_PHOTOS_PATH') . $photo->getClientOriginalName(),
+                    file_get_contents($photo)
+                );
+            }
+        }
+        dd('OK');
+        //dd($request->all());
     }
 
     /**
