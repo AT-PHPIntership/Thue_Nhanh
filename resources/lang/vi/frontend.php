@@ -72,7 +72,7 @@ return [
             'unsupport_geolocation' => 'Trình duyệt của bạn không hỗ trợ lấy vị trí hiện tại.',
             'undefined_photo_type' => 'Định dạng ảnh không đúng.',
             'not_support_thumbnail' => 'Trình duyệt không hỗ trợ xem trước hình ảnh.',
-            'select_only_img' => 'Vui lòng chỉ chọn file ảnh.',
+            'select_only_img' => 'Cảnh báo: file bạn vừa chọn có vẻ không phải là file ảnh!',
         ],
 
     ],

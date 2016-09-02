@@ -12,6 +12,7 @@
 
 <!--Form create post-->
 <div class="col-sm-7">
+    @include('frontend.common.errors')
     <div class="col-md-12">
         <h3 class="form-header">@lang('frontend.post.create.form_header')</h3>
     </div>
@@ -23,7 +24,7 @@
         <div class="form-group  col-md-12">
           <label for="type" class="col-md-3 control-label">@lang('frontend.post.create.post_type')</label>
           <div class="col-md-9">
-            <select class="form-control" id="type">
+            <select class="form-control" name="type" id="type">
               @foreach($postTypes as $type => $value)
                 <option value="{{$type}}">{{$value}}</option>
               @endforeach
@@ -33,7 +34,7 @@
         <div class="form-group col-md-12">
             <label for="category" class="col-md-3 control-label">@lang('frontend.post.create.category')</label>
             <div class="col-md-9">
-              <select class="form-control" id="category">
+              <select class="form-control" id="category" name="category_id">
                 @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
@@ -50,13 +51,13 @@
         <div class="form-group col-md-12">
             <label for="phone" class="col-md-3 control-label">@lang('frontend.post.create.phone')</label>
             <div class="col-md-9">
-                <input type="text" name="phone" id="phone" class="form-control" required maxlength="15" value="{{ null == $currentUser ? '' : $currentUser->phone_number}}">
+                <input type="text" name="phone_number" id="phone" class="form-control" required maxlength="15" value="{{ null == $currentUser ? '' : $currentUser->phone_number}}">
             </div>
         </div>
         <div class="form-group  col-md-12">
           <label for="city" class="col-md-3 control-label">@lang('frontend.post.create.city')</label>
           <div class="col-md-9">
-            <select class="selectpicker form-control" id="city" data-live-search="true">
+            <select class="selectpicker form-control" id="city" name="city_id" data-live-search="true">
               @foreach($cities as $city)
                 @if(null != $currentUser && $city->id == $currentUser->city_id)
                   <option value="{{$city->id}}" selected>{{$city->name}}</option>
@@ -115,11 +116,11 @@
         <div class="form-group col-md-12">
             <label class="col-md-3 control-label">@lang('frontend.post.create.time')</label>
             <div class="col-md-4">
-                <input type="text" name="start_time" class="form-control">
+                <input type="time" name="time_begin" class="form-control">
             </div>
             <label for="" class="col-md-1 control-label">@lang('frontend.post.create.to')</label>
             <div class="col-md-4">
-                <input type="text" name="end_time" class="form-control">
+                <input type="time" name="time_end" class="form-control">
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -128,14 +129,14 @@
               <table width="100%">
                 <tr>
                   <td><input type="checkbox" name="mon"> @lang('frontend.post.create.mon')</td>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.tue')</td>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.wed')</td>
+                  <td><input type="checkbox" name="tue"> @lang('frontend.post.create.tue')</td>
+                  <td><input type="checkbox" name="wed"> @lang('frontend.post.create.wed')</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.thur')</td>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.fri')</td>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.sat')</td>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.sun')</td>
+                  <td><input type="checkbox" name="thur"> @lang('frontend.post.create.thur')</td>
+                  <td><input type="checkbox" name="fri"> @lang('frontend.post.create.fri')</td>
+                  <td><input type="checkbox" name="sat"> @lang('frontend.post.create.sat')</td>
+                  <td><input type="checkbox" name="sun"> @lang('frontend.post.create.sun')</td>
                 </tr>
               </table>
             </div>
@@ -143,11 +144,11 @@
         <div class="form-group col-md-12">
             <label class="col-md-3 control-label">@lang('frontend.post.create.start_date')</label>
             <div class="col-md-4">
-                <input type="text" name="time_begin" id="time-begin" class="form-control">
+                <input type="date" name="start_date" class="form-control">
             </div>
             <label for="" class="col-md-1 control-label">@lang('frontend.post.create.to')</label>
             <div class="col-md-4">
-                <input type="text" name="time_end"  class="form-control">
+                <input type="date" name="end_date" class="form-control">
             </div>
         </div>
         <div class="form-group col-md-12">

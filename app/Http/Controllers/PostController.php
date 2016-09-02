@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Image;
 use Storage;
 use Exception;
+use App\Models\Post;
 use App\Http\Requests;
+use App\Services\PostServices;
 use App\Repositories\Eloquent\PostRepositoryEloquent;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
 use App\Repositories\Eloquent\CityRepositoryEloquent;
+use App\Repositories\Eloquent\PhotoRepositoryEloquent;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 
 class PostController extends Controller
@@ -43,19 +47,32 @@ class PostController extends Controller
     protected $city;
 
     /**
+     * The photo Repository eloquent instance.
+     *
+     * @var PhotoRepositoryEloquent
+     */
+    protected $photo;
+
+    /**
      * Create a new post controller instance.
      *
-     * @param PostRepositoryEloquent $post the post repository eloquent
+     * @param PostRepositoryEloquent     $post     the post repository eloquent
+     * @param CategoryRepositoryEloquent $category the category repository eloquent
+     * @param UserRepositoryEloquent     $user     the user repository eloquent
+     * @param CityRepositoryEloquent     $city     the city repository eloquent
+     * @param PhotoRepositoryEloquent    $photo    the photo repository eloquent
      */
     public function __construct(PostRepositoryEloquent $post,
                                 CategoryRepositoryEloquent $category,
                                 UserRepositoryEloquent $user,
-                                CityRepositoryEloquent $city)
+                                CityRepositoryEloquent $city,
+                                PhotoRepositoryEloquent $photo)
     {
         $this->post = $post;
         $this->category = $category;
         $this->user = $user;
         $this->city = $city;
+        $this->photo = $photo;
     }
 
     /**
@@ -97,44 +114,70 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request the request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $photos = $request->file('photos');
-        if (!empty($photos)) {
-            foreach ($photos as $photo) {
-                Storage::disk('storage')->put(
-                    \Config::get('common.POST_PHOTOS_PATH') . $photo->getClientOriginalName(),
-                    file_get_contents($photo)
-                );
-            }
+        $input = $request->only([
+            'category_id', 'city_id', 'address', 'lat', 'lng', 'phone_number', 'type',
+            'title', 'content', 'cost', 'time_begin', 'time_end', 'start_date',
+            'end_date', 'photos', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'
+        ]);
+
+        $validator = PostServices::creatingValidator($input);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
         }
-        dd('OK');
-        //dd($request->all());
+
+        // Retrieve selected date and encode to json.
+        $weekDays = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
+        $Chosen = [];
+        foreach ($weekDays as $day) {
+            $request->has($day) ? $choice = ['date' => $day, 'chosen' => true]
+            : $choice = ['date' => $day, 'chosen' => false];
+            array_push($Chosen, $choice);
+        }
+        $choosenDays = json_encode($Chosen);
+
+        $input['user_id'] = Auth::user()->id;
+        $input['slug'] = str_limit(str_slug($request->title), \Config::get('common.POST_SLUG_LENGTH_LIMIT'), '') . '~' . time();
+        $input['chosen_days'] = $choosenDays;
+        // Create the post
+        $post = $this->post->create($input);
+        // upload post's images
+        $upload = $this->uploadImage('photos', $post, $request);
+
+        dd('Post successfull!', $upload);
     }
 
     /**
      * Store the uploaded images to `storage\app\public\images\posts\<filename>`.
      *
-     * @param string                 $fieldName the name of HTML input tag
-     * @param PostRepositoryEloquent $post      the instance of post repository
-     * @param Request                $request   the request
+     * @param string          $fieldName the name of HTML input tag
+     * @param App\Models\Post $post      the instance of post repository
+     * @param Request         $request   the request
      *
      * @return boolean
      */
-    protected function uploadImage($fieldName, PostRepositoryEloquent $post, Request $request)
+    protected function uploadImage($fieldName, Post $post, Request $request)
     {
         try {
             $photos = $request->file($fieldName);
-            if (!empty($photo)) {
-                $fileName = str_limit(str_slug($post->title), \Config::get('common.FILE_NAME_LIMIT'), '~');
-                foreach ($photos as $index => $photo) {
-                    $filePath = \Config::get('common.POST_PHOTOS_PATH').$fileName.$index.'.'.getClientOriginalExtension();
-                    Storage::disk('storage')->put($filePath,file_get_contents($photo));
+            if (!empty($photos)) {
+                $stringName = $post->slug . '~';
+                foreach ($photos as $index => $image) {
+                    $index++;
+                    $fileName = $stringName . $index . str_random(8) . '.' . $image->getClientOriginalExtension();
+                    $filePath = \Config::get('common.POST_PHOTOS_PATH') . $fileName;
+                    Storage::disk('storage')->put($filePath, file_get_contents($image));
+                    $photo = $this->photo->create([
+                        'post_id'   => $post->id,
+                        'file_name' => $fileName,
+                    ]);
                     // resize the file to save storage space.
-                    $this->resize($filePath);
+                    // $this->resize($filePath);
                 }
             }
             return true;
