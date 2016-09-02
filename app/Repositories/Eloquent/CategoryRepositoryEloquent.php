@@ -10,6 +10,7 @@ use App\Validators\CategoryValidator;
 
 /**
  * Class CategoryRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
@@ -24,10 +25,12 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
         return Category::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

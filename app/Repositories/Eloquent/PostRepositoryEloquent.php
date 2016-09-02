@@ -10,6 +10,7 @@ use App\Validators\PostValidator;
 
 /**
  * Class PostRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class PostRepositoryEloquent extends BaseRepository implements PostRepository
@@ -28,6 +29,8 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

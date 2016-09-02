@@ -62,12 +62,14 @@ class PostController extends Controller
      * @param CityRepositoryEloquent     $city     the city repository eloquent
      * @param PhotoRepositoryEloquent    $photo    the photo repository eloquent
      */
-    public function __construct(PostRepositoryEloquent $post,
-                                CategoryRepositoryEloquent $category,
-                                UserRepositoryEloquent $user,
-                                CityRepositoryEloquent $city,
-                                PhotoRepositoryEloquent $photo)
-    {
+    public function __construct(
+        PostRepositoryEloquent $post,
+        CategoryRepositoryEloquent $category,
+        UserRepositoryEloquent $user,
+        CityRepositoryEloquent $city,
+        PhotoRepositoryEloquent $photo
+    ) {
+
         $this->post = $post;
         $this->category = $category;
         $this->user = $user;
@@ -99,8 +101,8 @@ class PostController extends Controller
             \Config::get('common.NEED_RENT_VAL') => trans('frontend.post.create.need_rent')
         ];
 
-        $data['categories'] = $this->category->scopeQuery(function($query){
-            return $query->orderBy('name','asc');
+        $data['categories'] = $this->category->scopeQuery(function ($query) {
+            return $query->orderBy('name', 'asc');
         })->all();
 
         $data['currentUser'] = $this->user->find(Auth::user()->id);
@@ -133,13 +135,13 @@ class PostController extends Controller
 
         // Retrieve selected date and encode to json.
         $weekDays = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
-        $Chosen = [];
+        $chosen = [];
         foreach ($weekDays as $day) {
             $request->has($day) ? $choice = ['date' => $day, 'chosen' => true]
             : $choice = ['date' => $day, 'chosen' => false];
-            array_push($Chosen, $choice);
+            array_push($chosen, $choice);
         }
-        $choosenDays = json_encode($Chosen);
+        $choosenDays = json_encode($chosen);
 
         $input['user_id'] = Auth::user()->id;
         $input['slug'] = str_limit(str_slug($request->title), \Config::get('common.POST_SLUG_LENGTH_LIMIT'), '') . '~' . time();
@@ -172,7 +174,7 @@ class PostController extends Controller
                     $fileName = $stringName . $index . str_random(8) . '.' . $image->getClientOriginalExtension();
                     $filePath = \Config::get('common.POST_PHOTOS_PATH') . $fileName;
                     Storage::disk('storage')->put($filePath, file_get_contents($image));
-                    $photo = $this->photo->create([
+                    $this->photo->create([
                         'post_id'   => $post->id,
                         'file_name' => $fileName,
                     ]);
@@ -189,7 +191,7 @@ class PostController extends Controller
     /**
      * Resize the uploaded image keep aspect ratio.
      *
-     * @param  string $filePath The path to image file
+     * @param string $filePath The path to image file
      *
      * @return void
      */
@@ -213,45 +215,57 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id the post id
+     *
      * @return \Illuminate\Http\Response
      */
+    /*
     public function show($id)
     {
         //
     }
+    */
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id the post id
+     *
      * @return \Illuminate\Http\Response
      */
+     /*
     public function edit($id)
     {
         //
     }
+    */
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request the request
+     * @param int                      $id      the post id
+     *
      * @return \Illuminate\Http\Response
      */
+     /*
     public function update(Request $request, $id)
     {
         //
     }
+    */
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id the post id
+     *
      * @return \Illuminate\Http\Response
      */
+     /*
     public function destroy($id)
     {
         //
     }
+    */
 }

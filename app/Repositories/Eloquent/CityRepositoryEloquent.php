@@ -10,6 +10,7 @@ use App\Validators\CityValidator;
 
 /**
  * Class CityRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class CityRepositoryEloquent extends BaseRepository implements CityRepository
@@ -24,10 +25,12 @@ class CityRepositoryEloquent extends BaseRepository implements CityRepository
         return City::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

@@ -10,6 +10,7 @@ use App\Validators\PhotoValidator;
 
 /**
  * Class PhotoRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class PhotoRepositoryEloquent extends BaseRepository implements PhotoRepository
@@ -24,10 +25,12 @@ class PhotoRepositoryEloquent extends BaseRepository implements PhotoRepository
         return Photo::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {
