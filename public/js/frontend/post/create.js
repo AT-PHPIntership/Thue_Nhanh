@@ -1,52 +1,50 @@
-<!-- LocationPicker -->
-    const DEFAULT_RADIUS = 100;
-    const DEFAULT_LAT = 21.0227731;
-    const DEFAULT_LNG = 105.8018581;
-    $(document).ready(function(){
-        // Innital component
-        $('#location').locationpicker({
-            radius: DEFAULT_RADIUS,
-            inputBinding: {
-                latitudeInput: $('#location-lat'),
-                longitudeInput: $('#location-lon'),
-                radiusInput: $('#location-radius'),
-                locationNameInput: $('#location-address')
-            },
-            enableAutocomplete: true,
-            onchanged: function(currentLocation, radius, isMarkerDropped) {
-                // alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-            }
-        });
-
-        var defaultPos = {
-            latitude: DEFAULT_LAT,
-            longitude: DEFAULT_LNG,
+// LocationPicker
+const DEFAULT_RADIUS = 100;
+const DEFAULT_LAT = 21.0227731;
+const DEFAULT_LNG = 105.8018581;
+$(document).ready(function(){
+    // Innital component
+    $('#location').locationpicker({
+        radius: DEFAULT_RADIUS,
+        inputBinding: {
+            latitudeInput: $('#location-lat'),
+            longitudeInput: $('#location-lon'),
+            radiusInput: $('#location-radius'),
+            locationNameInput: $('#location-address')
+        },
+        enableAutocomplete: true,
+        onchanged: function(currentLocation, radius, isMarkerDropped) {
+            // alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
         }
+    });
 
-        // Get current location. Try HTML5 geolocation.
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(function(position){
-                defaultPos = {
-                  latitude: position.coords.latitude,
-                  longitude: position.coords.longitude
-                };
-                $('#location').locationpicker('location', defaultPos);
-            });
-        } else {
-            alert(lang.post.create.unsupport_geolocation);
+    var defaultPos = {
+        latitude: DEFAULT_LAT,
+        longitude: DEFAULT_LNG,
+    }
+
+    // Get current location. Try HTML5 geolocation.
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            defaultPos = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
             $('#location').locationpicker('location', defaultPos);
-        }
-    });
-<!-- /LocationPicker -->
+        });
+    } else {
+        alert(lang.post.create.unsupport_geolocation);
+        $('#location').locationpicker('location', defaultPos);
+    }
+});
 
-<!-- Tinymce -->
-    tinymce.init({
-        selector:'#content',
-        // menubar: "false"
-    });
-<!-- /Tinymce -->
+// Tinymce
+tinymce.init({
+    selector:'#content',
+    // menubar: "false"
+});
 
-<!--Process before uploading images-->
+// Show small thumbnail images before uploading
 const EXTNS = ["jpg", "jpeg", "png", "gif"];
 
 $(document).ready(function() {
@@ -94,4 +92,11 @@ $(document).ready(function() {
         $("i",this).toggleClass("fa-angle-double-down fa-angle-double-up");
     });
 });
-<!--/Process before uploading images-->
+
+// show/hide the map
+$(document).ready(function() {
+    $('.toggle-map').click(function() {
+        $('.map_holder').toggle();
+        $("i",this).toggleClass('fa-caret-up fa-caret-down');
+    });
+});

@@ -22,6 +22,7 @@
     "bootstrap-select": "^1.11.0",
     "select2": "^4.0.3",
     "searchable-list": "^2.0.0",
-    "tinymce": "^4.4.2"
+    "tinymce": "^4.4.2",
+    "jquery-locationpicker-plugin": "^0.1.12",
   }
 }

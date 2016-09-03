@@ -14,4 +14,5 @@ return [
     'IMG_MAX_HEIGHT'            => 500,
     'IMG_MAX_WIDTH'             => 1000,
     'POST_SLUG_LENGTH_LIMIT'    => 75,
+    'URL_SEPARATOR'             => '~',
 ];

@@ -45,7 +45,7 @@
         <div class="form-group col-md-12">
             <label for="name" class="col-md-3 control-label">@lang('frontend.post.create.name')</label>
             <div class="col-md-9">
-                <input type="text" name="name" id="name" class="form-control" disabled required value="{{Auth::user()->name}}">
+                <input type="text" name="name" id="name" class="form-control" readonly required value="{{Auth::user()->name}}">
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -57,7 +57,7 @@
         <div class="form-group  col-md-12">
           <label for="city" class="col-md-3 control-label">@lang('frontend.post.create.city')</label>
           <div class="col-md-9">
-            <select class="selectpicker form-control" id="city" name="city_id" data-live-search="true">
+            <select class="selectpicker form-control" id="city" name="city_id" required data-live-search="true">
               @foreach($cities as $city)
                 @if(null != $currentUser && $city->id == $currentUser->city_id)
                   <option value="{{$city->id}}" selected>{{$city->name}}</option>
@@ -71,7 +71,11 @@
         <div class="form-group col-md-12">
             <label for="location-address" class="col-md-3 control-label">@lang('frontend.post.create.address')</label>
             <div class="col-md-9">
-                <input type="text" name="address" class="form-control" id="location-address" placeholder="@lang('frontend.post.create.add_eg')" value="{{null == $currentUser ? '' : $currentUser->address}}">
+                <input type="text" name="address" class="form-control" id="location-address" required
+                       placeholder="@lang('frontend.post.create.add_eg')"
+                       value="{{null == $currentUser ? '' : $currentUser->address}}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="@lang('frontend.post.create.title_add')">
                 <div class="hidden">
                     <input type="text" name="radius" id="location-radius"/>
                     <br>
@@ -80,31 +84,37 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group col-md-12">
-            <label for="location" class="col-md-12 control-label">@lang('frontend.post.create.pick_location')</label>
-            <div class="col-md-12">
-                <div class="form-control" id="location" style="width: 100%; height: 400px;"></div>
+            <label for="location" class="col-md-12 control-label toggle-map">@lang('frontend.post.create.pick_location') <strong>&nbsp;<i class="fa fa-caret-up"></i></strong></label>
+            <div class="col-md-12 map_holder">
+                <div class="form-control" id="location"></div>
             </div>
         </div>
         <div class="form-group col-md-12"><hr></div>
         <div class="form-group col-md-12">
             <label for="title" class="col-md-3 control-label">@lang('frontend.post.create.topic')</label>
             <div class="col-md-9">
-              <input type="text" name="title" id="title" class="form-control">
+              <input type="text" name="title" id="title" required class="form-control" value="{{old('title')}}">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label for="cost" class="col-md-3 control-label">@lang('frontend.post.create.cost')</label>
             <div class="col-md-9">
-              <input type="text" name="cost" id="cost" class="form-control">
+              <input type="text" name="cost" id="cost" required class="form-control"
+                     value="{{old('cost')}}"
+                     data-toggle="tooltip" data-placement="bottom"
+                     title="@lang('frontend.post.create.title_cost')">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label for="photos" class="col-md-3 control-label">@lang('frontend.post.create.photo')</label>
             <div class="col-md-9">
-              <label class="btn btn-primary btn-file" for="photos">
+              <label class="btn btn-primary btn-file" for="photos"
+                     data-toggle="tooltip" data-placement="bottom"
+                     title="@lang('frontend.post.create.title_cost')">
                 @lang('frontend.post.create.browse')
-                <input type="file" name="photos[]" id="photos" multiple style="display: none;">
+                <input type="file" name="photos[]" id="photos" required multiple>
               </label>
               <div class="toggle-img">
                   <i id="toggle-btn" class="fa fa-angle-double-up pull-right btn btn-xs btn-primary"></i>
@@ -116,27 +126,35 @@
         <div class="form-group col-md-12">
             <label class="col-md-3 control-label">@lang('frontend.post.create.time')</label>
             <div class="col-md-4">
-                <input type="time" name="time_begin" class="form-control">
+                <input type="time" name="time_begin" class="form-control" required
+                       value="{{old('time_begin')}}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="@lang('frontend.post.create.title_time_begin')">
             </div>
             <label for="" class="col-md-1 control-label">@lang('frontend.post.create.to')</label>
             <div class="col-md-4">
-                <input type="time" name="time_end" class="form-control">
+                <input type="time" name="time_end" class="form-control" required
+                       value="{{old('time_end')}}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="@lang('frontend.post.create.title_time_end')">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label class="col-md-3 control-label">@lang('frontend.post.create.days')</label>
             <div class="col-md-9">
-              <table width="100%">
+              <table class="btn-file" id="table-checkbox"
+                     data-toggle="tooltip" data-placement="bottom"
+                     title="@lang('frontend.post.create.title_week_days')">
                 <tr>
-                  <td><input type="checkbox" name="mon"> @lang('frontend.post.create.mon')</td>
-                  <td><input type="checkbox" name="tue"> @lang('frontend.post.create.tue')</td>
-                  <td><input type="checkbox" name="wed"> @lang('frontend.post.create.wed')</td>
+                  <td><input type="checkbox" name="mon" {{old('mon') ? 'checked' : ''}}> @lang('frontend.post.create.mon')</td>
+                  <td><input type="checkbox" name="tue" {{old('tue') ? 'checked' : ''}}> @lang('frontend.post.create.tue')</td>
+                  <td><input type="checkbox" name="wed" {{old('wed') ? 'checked' : ''}}> @lang('frontend.post.create.wed')</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="thur"> @lang('frontend.post.create.thur')</td>
-                  <td><input type="checkbox" name="fri"> @lang('frontend.post.create.fri')</td>
-                  <td><input type="checkbox" name="sat"> @lang('frontend.post.create.sat')</td>
-                  <td><input type="checkbox" name="sun"> @lang('frontend.post.create.sun')</td>
+                  <td><input type="checkbox" name="thur" {{old('thur') ? 'checked' : ''}}> @lang('frontend.post.create.thur')</td>
+                  <td><input type="checkbox" name="fri" {{old('fri') ? 'checked' : ''}}> @lang('frontend.post.create.fri')</td>
+                  <td><input type="checkbox" name="sat" {{old('sat') ? 'checked' : ''}}> @lang('frontend.post.create.sat')</td>
+                  <td><input type="checkbox" name="sun" {{old('sun') ? 'checked' : ''}}> @lang('frontend.post.create.sun')</td>
                 </tr>
               </table>
             </div>
@@ -144,17 +162,23 @@
         <div class="form-group col-md-12">
             <label class="col-md-3 control-label">@lang('frontend.post.create.start_date')</label>
             <div class="col-md-4">
-                <input type="date" name="start_date" class="form-control">
+                <input type="date" name="start_date" class="form-control" required
+                       value="{{old('start_date') ? old('start_date') : date('Y-m-d', time())}}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="@lang('frontend.post.create.title_start_date')">
             </div>
             <label for="" class="col-md-1 control-label">@lang('frontend.post.create.to')</label>
             <div class="col-md-4">
-                <input type="date" name="end_date" class="form-control">
+                <input type="date" name="end_date" class="form-control"
+                       value="{{old('start_date') ? old('start_date') : date('Y-m-d', strtotime('tomorrow'))}}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="@lang('frontend.post.create.title_end_date')">
             </div>
         </div>
         <div class="form-group col-md-12">
             <label for="content" class="col-md-12 control-label">@lang('frontend.post.create.content')</label>
             <div class="col-md-12">
-              <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+              <textarea name="content" id="content" rows="10" class="form-control" required>{{old('content')}}</textarea>
             </div>
         </div>
 
@@ -176,7 +200,7 @@
     var lang = {!! json_encode(trans('frontend')) !!};
 </script>
 <!-- LocationPicker -->
-<script src="/js/libs/locationpicker.jquery.js"></script>
+<script src="/bower_resources/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js"></script>
 <!-- Bootstrap-Select -->
 <script src="/bower_resources/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <!-- TinyMce -->
@@ -187,6 +211,12 @@
 
 <!-- GoogleMap API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 @endpush
 
 @push('style-sheets')

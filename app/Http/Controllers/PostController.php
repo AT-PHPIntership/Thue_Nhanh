@@ -130,7 +130,8 @@ class PostController extends Controller
 
         $validator = PostServices::creatingValidator($input);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            // $request->flash();
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
         }
 
         // Retrieve selected date and encode to json.
@@ -144,7 +145,7 @@ class PostController extends Controller
         $choosenDays = json_encode($chosen);
 
         $input['user_id'] = Auth::user()->id;
-        $input['slug'] = str_limit(str_slug($request->title), \Config::get('common.POST_SLUG_LENGTH_LIMIT'), '') . '~' . time();
+        $input['slug'] = str_limit(str_slug($request->title), \Config::get('common.POST_SLUG_LENGTH_LIMIT'), '') . \Config::get('common.URL_SEPARATOR') . time();
         $input['chosen_days'] = $choosenDays;
         // Create the post
         $post = $this->post->create($input);
@@ -168,7 +169,7 @@ class PostController extends Controller
         try {
             $photos = $request->file($fieldName);
             if (!empty($photos)) {
-                $stringName = $post->slug . '~';
+                $stringName = $post->slug . \Config::get('common.URL_SEPARATOR');
                 foreach ($photos as $index => $image) {
                     $index++;
                     $fileName = $stringName . $index . str_random(8) . '.' . $image->getClientOriginalExtension();
