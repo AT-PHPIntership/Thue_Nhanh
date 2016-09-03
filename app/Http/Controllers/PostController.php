@@ -130,7 +130,6 @@ class PostController extends Controller
 
         $validator = PostServices::creatingValidator($input);
         if ($validator->fails()) {
-            // $request->flash();
             return redirect()->back()->withInput($request->all())->withErrors($validator);
         }
 
@@ -139,7 +138,7 @@ class PostController extends Controller
         $chosen = [];
         foreach ($weekDays as $day) {
             $request->has($day) ? $choice = ['date' => $day, 'chosen' => true]
-            : $choice = ['date' => $day, 'chosen' => false];
+                                : $choice = ['date' => $day, 'chosen' => false];
             array_push($chosen, $choice);
         }
         $choosenDays = json_encode($chosen);
@@ -150,9 +149,9 @@ class PostController extends Controller
         // Create the post
         $post = $this->post->create($input);
         // upload post's images
-        $upload = $this->uploadImage('photos', $post, $request);
+        $this->uploadImage('photos', $post, $request);
 
-        dd('Post successfull!', $upload);
+        return redirect()->route('post.show', ['slug' => $post->slug]);
     }
 
     /**
@@ -234,7 +233,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     /*
+    /*
     public function edit($id)
     {
         //
@@ -249,7 +248,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     /*
+    /*
     public function update(Request $request, $id)
     {
         //
@@ -263,7 +262,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     /*
+    /*
     public function destroy($id)
     {
         //

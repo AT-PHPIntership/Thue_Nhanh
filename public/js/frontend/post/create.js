@@ -99,4 +99,23 @@ $(document).ready(function() {
         $('.map_holder').toggle();
         $("i",this).toggleClass('fa-caret-up fa-caret-down');
     });
+
+    // Check if there's a file selected when submit.
+    $('form').submit(function() {
+        var content = $('#content').val();
+        var fileSelected = $('#photos').val();
+        var atLeastOneIsChecked = $('input:checkbox').is(':checked');
+        if(!fileSelected) {
+            alert(lang.post.create.no_input_file);
+            return false;
+        }
+        if(!atLeastOneIsChecked) {
+            alert(lang.post.create.title_week_days);
+            return false;
+        }
+        if(!content) {
+            alert(lang.post.create.no_content);
+            return false;
+        }
+    });
 });

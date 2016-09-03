@@ -114,7 +114,7 @@
                      data-toggle="tooltip" data-placement="bottom"
                      title="@lang('frontend.post.create.title_cost')">
                 @lang('frontend.post.create.browse')
-                <input type="file" name="photos[]" id="photos" required multiple>
+                <input type="file" name="photos[]" id="photos" multiple>
               </label>
               <div class="toggle-img">
                   <i id="toggle-btn" class="fa fa-angle-double-up pull-right btn btn-xs btn-primary"></i>
@@ -178,7 +178,7 @@
         <div class="form-group col-md-12">
             <label for="content" class="col-md-12 control-label">@lang('frontend.post.create.content')</label>
             <div class="col-md-12">
-              <textarea name="content" id="content" rows="10" class="form-control" required>{{old('content')}}</textarea>
+              <textarea name="content" id="content" rows="10" class="form-control">{{old('content')}}</textarea>
             </div>
         </div>
 
@@ -215,6 +215,16 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
+
+        // Redirect if change post type
+        $('#type').change(function() {
+            const POST_TYPE_NEED = 0;
+            var typeSelected = $(this).val();
+            var urlType0 = "{{route('post.need_rent.create')}}";
+            if(typeSelected == POST_TYPE_NEED) {
+                $(location).attr('href', urlType0);
+            }
+        });
     });
 </script>
 @endpush

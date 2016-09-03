@@ -81,6 +81,8 @@ return [
             'title_week_days' => 'Chọn ít nhất 01 ngày trong tuần.',
             'title_start_date' => 'Ngày bắt đầu cho thuê. Định dạng: MM/DD/YYYY',
             'title_end_date' => 'Ngày kết thúc cho thuê. Định dạng: MM/DD/YYYY',
+            'no_input_file' => 'Bài đăng phải có hình ảnh thật.',
+            'no_content' => 'Bài đăng phải có nội dung.',
         ],
 
     ],

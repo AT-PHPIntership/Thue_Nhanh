@@ -20,9 +20,7 @@
     "validetta": "^1.0.1",
     "bootswatch": "^3.3.7",
     "bootstrap-select": "^1.11.0",
-    "select2": "^4.0.3",
-    "searchable-list": "^2.0.0",
     "tinymce": "^4.4.2",
-    "jquery-locationpicker-plugin": "^0.1.12",
+    "jquery-locationpicker-plugin": "^0.1.12"
   }
 }
