@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-class Violation extends Model
+class Violation extends Model implements Transformable
 {
+    use TransformableTrait;
+
     protected $table = 'violations';
 
     /**
