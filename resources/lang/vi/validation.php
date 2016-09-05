@@ -94,8 +94,102 @@ return [
     */
 
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'category_id'   => [
+            'required'  => 'Vui lòng chọn Chuyên mục.',
+            'numeric'   => 'Không tìm thấy Chuyên mục.',
+            'exists'    => 'Không tìm thấy Chuyên mục.',
+        ],
+        'city_id'           => [
+            'required'  => 'Vui lòng chọn Thành phố.',
+            'numeric'   => 'Không tìm thấy Thành phố.',
+            'exists'    => 'Không tìm thấy Thành phố.',
+
+        ],
+        'address'           => [
+            'required'  => 'Không được để trống Địa chỉ.',
+            'string'    => 'Địa chỉ sai định dạng.',
+            'max'       => 'Địa chỉ dài quá :max ký tự',
+
+        ],
+        'lat'               => [
+            'numeric'   => 'Không định vị được địa chỉ trên bản đồ.',
+            'min'       => 'Địa chỉ không đúng.',
+            'max'       => 'Địa chỉ không đúng.',
+
+        ],
+        'lng'               => [
+            'numeric'   => 'Không định vị được địa chỉ trên bản đồ.',
+            'min'       => 'Địa chỉ không đúng.',
+            'max'       => 'Địa chỉ không đúng.',
+
+        ],
+        'phone_number'       => [
+            'required'  => 'Số điện thoại không được bỏ trống.',
+            'max'       => 'Số điện thoại dài quá :max ký tự',
+            'regex'     => 'Số điện thoại có vẻ không đúng, vui lòng thử lại.',
+
+        ],
+        'type'              => [
+            'required'  => 'Loại tin không xác định!',
+        ],
+        'title'  => [
+            'required'  => 'Tiêu đề không được bỏ trống.',
+            'max'       => 'Tiêu đề không được dài quá :max ký tự',
+        ],
+        'content'           => [
+            'required'  => 'Bài đăng phải có nội dung!',
+            'max'       => 'Nội dung dài quá :max ký tự.',
+
+        ],
+        'cost'              => [
+            'required'  => 'Giá cả không được bỏ trống.',
+            'numeric'   => 'Giá không đúng định dạng.',
+        ],
+        'time_begin'        => [
+            'required'  => 'Khung giờ (giờ bắt đầu) không được bỏ trống',
+            'date_format'   => 'Khung giờ sai định dạng. VD định dạng đúng: 2:30 PM',
+        ],
+        'time_end'          => [
+            'required'  => 'Khung giờ (giờ kết thúc) không được bỏ trống',
+            'after'     => 'Giờ kết thúc phải nhỏ hơn giờ bắt đầu!',
+            'date_format'   => 'Khung giờ sai định dạng. VD định dạng đúng: 2:30 PM',
+        ],
+        'start_date'        => [
+            'required'  => 'Ngày bắt đầu không được bỏ trống',
+            'after'     => 'Ngày bắt đầu không được ở quá khứ.',
+            'date_format'   => 'Ngày bắt đầu sai định dạng.',
+        ],
+        'end_date'          => [
+            'after'     => 'Ngày kết thúc phải ở sau sau ngày bắt đầu.',
+            'date_format'   => 'Ngày kết thúc sai định dạng.',
+        ],
+        'photos'            => [
+            'required'  => 'Tin không có ảnh thực tế sẽ không được duyệt.',
+        ],
+        'photos.*'           => [
+            'required'  => 'Tin không có ảnh thực tế sẽ không được duyệt.',
+            'image'     => 'File tải lên không phải là file ảnh.',
+        ],
+        'mon'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'tue'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'wed'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'thur'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'fri'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'sat'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
+        ],
+        'sun'  => [
+            'required_without_all'  => 'Phải chọn ít nhất một ngày trong tuần.',
         ],
     ],
 

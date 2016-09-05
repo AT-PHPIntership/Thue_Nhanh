@@ -9,7 +9,9 @@
         "laravel/framework": "5.2.*",
         "fzaninotto/faker": "^1.6",
         "prettus/l5-repository": "^2.6",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "laravelcollective/html": "5.2.*",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
