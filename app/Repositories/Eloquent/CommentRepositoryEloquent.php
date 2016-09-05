@@ -10,6 +10,7 @@ use App\Validators\CommentValidator;
 
 /**
  * Class CommentRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class CommentRepositoryEloquent extends BaseRepository implements CommentRepository
@@ -24,10 +25,12 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
         return Comment::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

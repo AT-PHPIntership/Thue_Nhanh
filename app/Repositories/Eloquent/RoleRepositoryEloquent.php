@@ -10,6 +10,7 @@ use App\Validators\RoleValidator;
 
 /**
  * Class RoleRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
@@ -24,10 +25,12 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
         return Role::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

@@ -10,6 +10,7 @@ use App\Validators\NotificationTypeValidator;
 
 /**
  * Class NotificationTypeRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class NotificationTypeRepositoryEloquent extends BaseRepository implements NotificationTypeRepository
@@ -24,10 +25,12 @@ class NotificationTypeRepositoryEloquent extends BaseRepository implements Notif
         return NotificationType::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

@@ -10,6 +10,7 @@ use App\Validators\VoteValidator;
 
 /**
  * Class VoteRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class VoteRepositoryEloquent extends BaseRepository implements VoteRepository
@@ -24,10 +25,12 @@ class VoteRepositoryEloquent extends BaseRepository implements VoteRepository
         return Vote::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

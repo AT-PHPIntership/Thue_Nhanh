@@ -10,6 +10,7 @@ use App\Validators\ViolationValidator;
 
 /**
  * Class ViolationRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class ViolationRepositoryEloquent extends BaseRepository implements ViolationRepository
@@ -24,10 +25,12 @@ class ViolationRepositoryEloquent extends BaseRepository implements ViolationRep
         return Violation::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

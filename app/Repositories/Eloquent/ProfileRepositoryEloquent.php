@@ -10,6 +10,7 @@ use App\Validators\ProfileValidator;
 
 /**
  * Class ProfileRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class ProfileRepositoryEloquent extends BaseRepository implements ProfileRepository
@@ -24,10 +25,12 @@ class ProfileRepositoryEloquent extends BaseRepository implements ProfileReposit
         return Profile::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {

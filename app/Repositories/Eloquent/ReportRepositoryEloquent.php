@@ -10,6 +10,7 @@ use App\Validators\ReportValidator;
 
 /**
  * Class ReportRepositoryEloquent
+ *
  * @package namespace App\Repositories\Eloquent;
  */
 class ReportRepositoryEloquent extends BaseRepository implements ReportRepository
@@ -24,10 +25,12 @@ class ReportRepositoryEloquent extends BaseRepository implements ReportRepositor
         return Report::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
+     *
+     * @return void
      */
     public function boot()
     {
