@@ -33,3 +33,9 @@ Route::get('register/verify/{id}/{validationCode}', ['uses' => 'Auth\AuthControl
 Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
 
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('post', 'PostController');
+
+    Route::get('/post/need/create/', ['uses' => 'PostController@showCreatingForm', 'as' => 'post.need_rent.create']);
+});
