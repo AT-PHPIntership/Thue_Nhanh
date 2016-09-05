@@ -12,10 +12,7 @@ $(document).ready(function(){
             radiusInput: $('#location-radius'),
             locationNameInput: $('#location-address')
         },
-        enableAutocomplete: true,
-        onchanged: function(currentLocation, radius, isMarkerDropped) {
-            // alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-        }
+        enableAutocomplete: true
     });
 
     var defaultPos = {
