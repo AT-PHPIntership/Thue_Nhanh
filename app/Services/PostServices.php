@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Validator;
 
 class PostServices
@@ -41,5 +42,44 @@ class PostServices
             'sun'           => 'required_without_all:mon,tue,wed,thur,fri,sat',
         ];
         return Validator::make($data, $rules);
+    }
+
+    /**
+     * Return the created time of comment.
+     *
+     * @param string $time created_at
+     *
+     * @return string
+     */
+    public static function parseHumansTime(string $time)
+    {
+        $commentTime = Carbon::parse($time);
+
+        return $commentTime->diffInHours() <= \Config::get('common.HOURS_A_DAY') ? $commentTime->diffForHumans() : $commentTime->format('H:i d-m-Y ');
+    }
+
+    /**
+     * Check if use has roles.
+     *
+     * @param mixed $roles the roles array or eloquent
+     *
+     * @return array
+     */
+    public static function getRoles($roles)
+    {
+        $allRoles = [
+            'isMember'      => \Config::get('common.ROLE_MEM'),
+            'isMod'         => \Config::get('common.ROLE_MOD'),
+            'isAdmin'       => \Config::get('common.ROLE_ADMIN'),
+            'isWebmaster'   => \Config::get('common.ROLE_WEBMASTER'),
+        ];
+
+        $result = [];
+
+        foreach ($allRoles as $role => $value) {
+            $result[$role] = $roles ? $roles->contains($value) : false;
+        }
+
+        return $result;
     }
 }

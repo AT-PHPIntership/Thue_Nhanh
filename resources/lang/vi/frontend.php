@@ -84,6 +84,27 @@ return [
             'no_input_file' => 'Bài đăng phải có hình ảnh thật.',
             'no_content' => 'Bài đăng phải có nội dung.',
         ],
+        'show' => [
+            'next' => 'Next',
+            'previous' => 'Previous',
+            'reviewer' => 'Kiểm duyệt: ',
+            'no_reviewer' => 'Chưa kiểm duyệt',
+            'comments' => 'Bình luận',
+            'report' => 'Báo cáo',
+            'page' => 'trang',
+            'currency' => '/giờ',
+            'login' => 'Đăng nhập',
+            'to_comment' => 'để gửi bình luận',
+            'comment_placeholder' => 'Để lại bình luận?',
+            'btn_edit' => 'Sửa',
+            'btn_del' => 'Xoá',
+            'direction' => 'Xem hướng dẫn đường đi',
+            'contact' => 'Liên hệ:',
+            'address' => 'Địa chỉ',
+            'name' => 'Tên: ',
+            'phone' => 'ĐT: ',
+            'city' => 'Tỉnh/TP: '
+        ],
 
     ],
 ];
