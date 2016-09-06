@@ -10,10 +10,14 @@ use Exception;
 use App\Models\Post;
 use App\Http\Requests;
 use App\Services\PostServices;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Eloquent\PostRepositoryEloquent;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
 use App\Repositories\Eloquent\CityRepositoryEloquent;
+use App\Repositories\Eloquent\VoteRepositoryEloquent;
 use App\Repositories\Eloquent\PhotoRepositoryEloquent;
+use App\Repositories\Eloquent\CommentRepositoryEloquent;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 
 class PostController extends Controller
@@ -54,6 +58,20 @@ class PostController extends Controller
     protected $photo;
 
     /**
+     * The comment Repository eloquent instance.
+     *
+     * @var CommentRepositoryEloquent
+     */
+    protected $comment;
+
+    /**
+     * The vote Repository eloquent instance.
+     *
+     * @var VoteRepositoryEloquent
+     */
+    protected $vote;
+
+    /**
      * Create a new post controller instance.
      *
      * @param PostRepositoryEloquent     $post     the post repository eloquent
@@ -61,13 +79,17 @@ class PostController extends Controller
      * @param UserRepositoryEloquent     $user     the user repository eloquent
      * @param CityRepositoryEloquent     $city     the city repository eloquent
      * @param PhotoRepositoryEloquent    $photo    the photo repository eloquent
+     * @param CommentRepositoryEloquent  $comment  the photo repository eloquent
+     * @param VoteRepositoryEloquent     $vote     the vote repository eloquent
      */
     public function __construct(
         PostRepositoryEloquent $post,
         CategoryRepositoryEloquent $category,
         UserRepositoryEloquent $user,
         CityRepositoryEloquent $city,
-        PhotoRepositoryEloquent $photo
+        PhotoRepositoryEloquent $photo,
+        CommentRepositoryEloquent $comment,
+        VoteRepositoryEloquent $vote
     ) {
 
         $this->post = $post;
@@ -75,6 +97,8 @@ class PostController extends Controller
         $this->user = $user;
         $this->city = $city;
         $this->photo = $photo;
+        $this->comment = $comment;
+        $this->vote = $vote;
     }
 
     /**
@@ -219,12 +243,38 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
     public function show($id)
     {
-        //
+        $post = $this->post->with('category')->with('city')->with('reviewer')->with('user')->find($id);
+        $comments = $this->comment->with('user')
+                                  ->scopeQuery(function ($query) {
+                                      return $query->orderBy('created_at', 'desc');
+                                  })
+                                  ->findByField('post_id', $post->id);
+        $currentPage = Paginator::resolveCurrentPage() - 1;
+        $perPage = \Config::get('common.COMMENTS_PER_PAGE');
+        $currentSearchResults = $comments->slice($currentPage * $perPage, $perPage)->all();
+        $comments  = new LengthAwarePaginator($currentSearchResults, count($comments), $perPage);
+
+        $user = Auth::user() ? $this->user->find(Auth::user()->id) : null;
+
+        $roles = [];
+        if ($user) {
+            $roles = $user->roles->pluck('name');
+        }
+        $roles = PostServices::getRoles($roles);
+        $data = [
+            'post'        => $post,
+            'photos'      => $this->photo->findByField('post_id', $post->id),
+            'comments'    => $comments,
+            'votes'       => $this->vote->with('user')->findByField('post_id', $post->id),
+            'roles'       => $roles,
+            'isAuthor'    => $user ? ($user->id == $post->user_id) : false,
+        ];
+        $data = array_merge($data, $roles);
+        
+        return view('frontend.posts.show')->with($data);
     }
-    */
 
     /**
      * Show the form for editing the specified resource.

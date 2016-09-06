@@ -35,7 +35,11 @@ Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@r
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('post', 'PostController');
+    Route::resource('post', 'PostController', ['except' => ['show', 'index']]);
 
     Route::get('/post/need/create/', ['uses' => 'PostController@showCreatingForm', 'as' => 'post.need_rent.create']);
 });
+
+Route::get('/post/{id}', ['uses' => 'PostController@show', 'as' => 'post.show']);
+
+Route::get('/posts', ['uses' => 'PostController@index', 'as' => 'post.index']);
