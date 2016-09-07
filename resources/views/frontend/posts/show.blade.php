@@ -120,6 +120,14 @@
                 @if(Auth::user())
                     <!-- Comment textarea -->
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                <ul>
+                                    <div id="commment-errors"></div>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="col-sm-1">
                             <div class="thumbnail">
                                 <img class="img-responsive user-photo" src="{!! url(\Config::get('common.AVATAR_PATH') . Auth::user()->avatar) !!}">
@@ -131,9 +139,12 @@
                         <div class="col-md-11">
                             <div class="widget-area no-padding blank">
                                 <div class="status-upload">
-                                    <form>
-                                        <textarea placeholder="@lang('frontend.post.show.comment_placeholder')" ></textarea>
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-comment"></i> @lang('frontend.post.show.comments')</button>
+                                    <form method="post" id="comment-form">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="user_id" value="{{Auth::user() ? Auth::user()->id : ''}}">
+                                        <input type="hidden" name="post_id" value="{{$post->id}}">
+                                        <textarea name="content" placeholder="@lang('frontend.post.show.comment_placeholder')" id="comment-text"></textarea>
+                                        <button type="submit" class="btn btn-default btn-comment"><i class="fa fa-comment"></i> @lang('frontend.post.show.comments')</button>
                                     </form>
                                 </div><!-- Status Upload  -->
                             </div><!-- Widget Area -->
@@ -169,7 +180,7 @@
                                         </small>
 
                                     </div>
-                                    <div class="panel-body">{!!$comment->content!!}</div>
+                                    <div class="panel-body">{{$comment->content}}</div>
                                     <!-- /panel-body -->
                                 </div>
                                 <!-- /panel panel-default -->
@@ -219,5 +230,11 @@
             zoom: zoom
         });
     });
+
+    var url = "{{route('comment.store')}}";
+</script>
+<script src="/js/frontend/comment/create.js"></script>
+<script>
+    submitComment(url);
 </script>
 @endpush

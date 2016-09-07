@@ -105,6 +105,10 @@ return [
             'phone' => 'ĐT: ',
             'city' => 'Tỉnh/TP: '
         ],
-
+    ],
+    'comment' => [
+        'create' => [
+            'fails' => 'Lỗi! Không thể gửi bình luận.',
+        ],
     ],
 ];

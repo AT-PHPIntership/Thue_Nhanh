@@ -21,4 +21,7 @@ return [
     'ROLE_MOD'                  => 'Mod',
     'ROLE_ADMIN'                => 'Admin',
     'ROLE_WEBMASTER'            => 'Webmaster',
+    'HTTP_OK_STATUS'            => 200,
+    'HTTP_CREATED_STATUS'       => 201,
+    'HTTP_BAD_REQUEST_STATUS'   => 400,
 ];
