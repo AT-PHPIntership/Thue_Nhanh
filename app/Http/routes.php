@@ -37,6 +37,8 @@ Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallbac
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('post', 'PostController', ['except' => ['show', 'index']]);
 
+    Route::resource('comment', 'CommentController');
+
     Route::get('/post/need/create/', ['uses' => 'PostController@showCreatingForm', 'as' => 'post.need_rent.create']);
 });
 
