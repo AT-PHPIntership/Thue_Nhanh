@@ -47,9 +47,9 @@ class CommentRequest extends Request
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'content.required'  => 'Bình luận phải có nội dung.',
-                    'content.min'       => 'Bình luận phải ít nhất :min ký tự',
-                    'content.max'       => 'Bình luận tối đa chỉ :max ký tự',
+                    'content.required'  => trans('frontend.comment.validation.required'),
+                    'content.min'       => trans('frontend.comment.validation.min'),
+                    'content.max'       => trans('frontend.comment.validation.max'),
                 ];
 
             default:

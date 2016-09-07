@@ -120,14 +120,6 @@
                 @if(Auth::user())
                     <!-- Comment textarea -->
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11">
-                                <ul>
-                                    <div id="commment-errors"></div>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="col-sm-1">
                             <div class="thumbnail">
                                 <img class="img-responsive user-photo" src="{!! url(\Config::get('common.AVATAR_PATH') . Auth::user()->avatar) !!}">

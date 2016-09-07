@@ -77,12 +77,12 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /*
     public function show(Request $request, $id)
     {
-        if ($request->ajax()) {
-            return response()->json($this->comment->with('user')->find($id), Config::get('common.HTTP_OK_STATUS'));
-        }
+        //
     }
+    */
 
     /**
      * Show the form for editing the specified resource.

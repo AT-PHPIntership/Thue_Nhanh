@@ -107,6 +107,11 @@ return [
         ],
     ],
     'comment' => [
+        'validation' => [
+            'required'  => 'Bình luận phải có nội dung.',
+            'min'       => 'Bình luận phải ít nhất :min ký tự',
+            'max'       => 'Bình luận tối đa chỉ :max ký tự',
+        ],
         'create' => [
             'fails' => 'Lỗi! Không thể gửi bình luận.',
         ],
