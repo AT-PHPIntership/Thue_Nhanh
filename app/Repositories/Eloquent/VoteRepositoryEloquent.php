@@ -36,4 +36,19 @@ class VoteRepositoryEloquent extends BaseRepository implements VoteRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Check if a user voted for a post.
+     *
+     * @param int $post the post's id
+     * @param int $id   the user's id
+     *
+     * @return boolean
+     */
+    public function isVote($post, $id)
+    {
+        return $this->model->with('user')->where('post_id', $post)
+                           ->where('user_id', $id)
+                           ->first() ? true : false;
+    }
 }

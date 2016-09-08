@@ -116,4 +116,8 @@ return [
             'fails' => 'Lỗi! Không thể gửi bình luận.',
         ],
     ],
+    'vote' => [
+        'success'       => 'Thành công.',
+        'fails'         => 'Lỗi, thử lại sau!',
+    ],
 ];
