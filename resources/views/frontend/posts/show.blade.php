@@ -71,17 +71,25 @@
                     </a>
                   </div>
                 <!-- /Slide show -->
-
                 <div class="caption-full">
                     <h4 class="pull-right">{!! number_format($post->cost).trans('frontend.post.show.currency') !!}</h4>
                     <h4><a href="#">{{$post->title}}</a>
                     </h4>
                     <div class="detail">
                         <span class="detail-item">
-                            <i class="fa fa-heart"></i> {!!count($votes)!!}
+                            <form id="vote-form" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="post_id" value="{{$post->id}}">
+                                @if($isVote)
+                                    <i class="fa fa-heart text-primary" id="btn-vote"></i>
+                                @else
+                                    <i class="fa fa-heart" id="btn-vote"></i>
+                                @endif
+                                {!!count($votes)!!}
+                            </form>
                         </span>
                         <span class="detail-item">
-                            <a href="#comments" class="no-underline"><i class="fa fa-comments"></i> {!!count($comments)!!} @lang('frontend.post.show.comments')</a>
+                            <a href="#comments" class="no-underline"><i class="fa fa-comments"></i> {!!$countComments!!} @lang('frontend.post.show.comments')</a>
                         </span>
                         <span class="detail-item">
                             <a href="#" class="no-underline"><i class="fa fa-warning"></i> @lang('frontend.post.show.report')</a>
@@ -223,10 +231,13 @@
         });
     });
 
-    var url = "{{route('comment.store')}}";
 </script>
 <script src="/js/frontend/comment/create.js"></script>
+<script src="/js/frontend/votes/main.js"></script>
 <script>
+    var url = "{{route('comment.store')}}";
+    var voteURL = "{{route('vote.create')}}";
     submitComment(url);
+    clickVote(voteURL);
 </script>
 @endpush

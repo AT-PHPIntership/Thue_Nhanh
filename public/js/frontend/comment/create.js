@@ -25,7 +25,8 @@ function submitComment(url){
             },
             dataType: 'json',
             success: function(data){
-                $("#comments").load(location.href + " #comments")
+                $("#comments").load(location.href + " #comments");
+                $(".detail").load(location.href + " .detail");
             },
             error: function(data){
                 var errors = JSON.parse(data.responseText).content;
