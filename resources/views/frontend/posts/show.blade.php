@@ -202,18 +202,18 @@
 @endsection
 
 @push('style-sheets')
-<link rel="stylesheet" href="/css/frontend/main.css">
+<link rel="stylesheet" href="{{asset('/css/frontend/main.css')}}">
 @endpush
 
 @push('scripts')
 <!-- LocationPicker -->
-<script src="/bower_resources/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js"></script>
+<script src="{{asset('/bower_resources/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js')}}"></script>
 
 <!-- GoogleMap API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
 
 <!-- Autosize -->
-<script src="/bower_resources/autosize/dist/autosize.min.js"></script>
+<script src="{{asset('/bower_resources/autosize/dist/autosize.min.js')}}"></script>
 
 <script>
     autosize($('textarea'));
@@ -232,8 +232,8 @@
     });
 
 </script>
-<script src="/js/frontend/comment/create.js"></script>
-<script src="/js/frontend/votes/main.js"></script>
+<script src="{{asset('/js/frontend/comment/create.js')}}"></script>
+<script src="{{asset('/js/frontend/votes/main.js')}}"></script>
 <script>
     var url = "{{route('comment.store')}}";
     var voteURL = "{{route('vote.create')}}";

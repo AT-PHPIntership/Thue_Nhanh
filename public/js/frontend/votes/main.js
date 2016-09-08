@@ -17,11 +17,9 @@ function clickVote(url) {
             },
             dataType: 'json',
             success: function(data){
-                console.log(data);
                 $("#vote-form").load(location.href + " #vote-form");
             },
             error: function(data){
-                console.log(data);
                 $("#vote-form").load(location.href + " #vote-form");
             }
         });

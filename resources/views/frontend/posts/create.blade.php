@@ -200,14 +200,14 @@
     var lang = {!! json_encode(trans('frontend')) !!};
 </script>
 <!-- LocationPicker -->
-<script src="/bower_resources/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js"></script>
+<script src="{{asset('/bower_resources/jquery-locationpicker-plugin/dist/locationpicker.jquery.min.js')}}"></script>
 <!-- Bootstrap-Select -->
-<script src="/bower_resources/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="{{asset('/bower_resources/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
 <!-- TinyMce -->
-<script src="/bower_resources/tinymce/tinymce.min.js"></script>
+<script src="{{asset('/bower_resources/tinymce/tinymce.min.js')}}"></script>
 
 <!--Custom scripts-->
-<script src="/js/frontend/post/create.js"></script>
+<script src="{{asset('/js/frontend/post/create.js')}}"></script>
 
 <!-- GoogleMap API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
@@ -230,6 +230,6 @@
 @endpush
 
 @push('style-sheets')
-<link rel="stylesheet" href="/bower_resources/bootstrap-select/dist/css/bootstrap-select.min.css">
-<link rel="stylesheet" href="/css/frontend/main.css">
+<link rel="stylesheet" href="{{asset('/bower_resources/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
+<link rel="stylesheet" href="{{asset('/css/frontend/main.css')}}">
 @endpush
