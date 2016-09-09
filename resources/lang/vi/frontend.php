@@ -105,6 +105,13 @@ return [
             'phone' => 'ĐT: ',
             'city' => 'Tỉnh/TP: '
         ],
+        'index' => [
+            'need_rent'             => 'Cần Thuê',
+            'for_rent'              => 'Cho Thuê',
+            'home'                  => 'Trang Chủ',
+            'category'              => 'Chuyên mục',
+            'unit'                  => '/giờ thuê',
+        ],
     ],
     'comment' => [
         'validation' => [

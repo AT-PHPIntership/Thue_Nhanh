@@ -234,3 +234,12 @@ padding: 0;
 .login-text {
     padding-bottom: 20px;
 }
+
+a.no-link-color {
+    color: inherit;
+}
+
+a.no-link-color:hover {
+    color: inherit;
+    cursor: pointer;
+}

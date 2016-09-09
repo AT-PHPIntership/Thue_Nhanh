@@ -36,4 +36,22 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Get all post by post type.
+     *
+     * @param int $type The type of posts
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function getPosts($type)
+    {
+        return $this->model->with('photos')
+                    ->with('category')
+                    ->with('votes')
+                    ->with('city')
+                    ->where('type', $type)
+                    ->whereNotNull('reviewed_by')
+                    ->orderBy('created_at', 'desc');
+    }
 }
