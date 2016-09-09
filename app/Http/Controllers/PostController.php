@@ -9,7 +9,9 @@ use Storage;
 use Exception;
 use App\Models\Post;
 use App\Http\Requests;
+use App\Services\VoteServices;
 use App\Services\PostServices;
+use App\Services\CommentServices;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Repositories\Eloquent\PostRepositoryEloquent;
@@ -252,30 +254,38 @@ class PostController extends Controller
     public function show($id)
     {
         $post = $this->post->with('category')->with('city')->with('reviewer')->with('user')->find($id);
+
         $comments = $this->comment->with('user')
                                   ->scopeQuery(function ($query) {
                                       return $query->orderBy('created_at', 'desc');
                                   })
                                   ->findByField('post_id', $post->id);
-        $currentPage = Paginator::resolveCurrentPage() - 1;
-        $perPage = \Config::get('common.COMMENTS_PER_PAGE');
-        $currentSearchResults = $comments->slice($currentPage * $perPage, $perPage)->all();
-        $comments  = new LengthAwarePaginator($currentSearchResults, count($comments), $perPage);
+        $countComments = count($comments);
 
-        $user = Auth::user() ? $this->user->find(Auth::user()->id) : null;
+        $comments = CommentServices::paginate($comments, \Config::get('common.COMMENTS_PER_PAGE'));
 
+        $user = null;
         $roles = [];
-        if ($user) {
+        $isVote = false;
+        if (Auth::user()) {
+            $user = $this->user->find(Auth::user()->id);
+
             $roles = $user->roles->pluck('name');
+
+            $isVote = $this->vote->isVote($post->id, $user->id);
         }
+
         $roles = PostServices::getRoles($roles);
+
         $data = [
-            'post'        => $post,
-            'photos'      => $this->photo->findByField('post_id', $post->id),
-            'comments'    => $comments,
-            'votes'       => $this->vote->with('user')->findByField('post_id', $post->id),
-            'roles'       => $roles,
-            'isAuthor'    => $user ? ($user->id == $post->user_id) : false,
+            'post'          => $post,
+            'photos'        => $this->photo->findByField('post_id', $post->id),
+            'comments'      => $comments,
+            'countComments' => $countComments,
+            'votes'         => $this->vote->with('user')->findByField('post_id', $post->id),
+            'roles'         => $roles,
+            'isAuthor'      => $user ? ($user->id == $post->user_id) : false,
+            'isVote'        => $isVote,
         ];
         $data = array_merge($data, $roles);
 

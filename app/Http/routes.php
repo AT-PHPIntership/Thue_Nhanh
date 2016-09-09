@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('comment', 'CommentController');
 
     Route::get('/post/need/create/', ['uses' => 'PostController@showCreatingForm', 'as' => 'post.need_rent.create']);
+
+    Route::post('/vote/create', ['uses' => 'VoteController@create', 'as' => 'vote.create']);
 });
 
 Route::get('/post/{id}', ['uses' => 'PostController@show', 'as' => 'post.show']);

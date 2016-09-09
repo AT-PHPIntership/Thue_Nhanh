@@ -235,6 +235,14 @@ padding: 0;
     padding-bottom: 20px;
 }
 
+#vote-form {
+    float: left;
+}
+
+#btn-vote:hover {
+    cursor: pointer;
+}
+
 a.no-link-color {
     color: inherit;
 }
