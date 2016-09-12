@@ -242,3 +242,12 @@ padding: 0;
 #btn-vote:hover {
     cursor: pointer;
 }
+
+a.no-link-color {
+    color: inherit;
+}
+
+a.no-link-color:hover {
+    color: inherit;
+    cursor: pointer;
+}

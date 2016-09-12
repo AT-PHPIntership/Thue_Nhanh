@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.layouts.master');
-})->name('home');
+Route::get('/', ['uses' => 'PostController@index', 'as' => 'home']);
 
 Route::auth();
 
@@ -47,3 +45,5 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/post/{id}', ['uses' => 'PostController@show', 'as' => 'post.show']);
 
 Route::get('/posts', ['uses' => 'PostController@index', 'as' => 'post.index']);
+
+Route::get('/{category}/{post}.html', ['uses' => 'PostController@read', 'as' => 'post.read']);

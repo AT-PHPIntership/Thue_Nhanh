@@ -110,7 +110,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $forRentPosts = $this->post->getPosts(\Config::get('common.FOR_RENT_VAL'));
+        $needRentPosts = $this->post->getPosts(\Config::get('common.NEED_RENT_VAL'));
+
+        $data['forRentPosts'] = $forRentPosts->paginate(\Config::get('common.POSTS_PER_PAGE'), ['*'], 'cho_thue');
+        $data['needRentPosts'] = $needRentPosts->paginate(\Config::get('common.POSTS_PER_PAGE'), ['*'], 'can_thue');
+
+        return view('frontend.posts.index')->with($data);
     }
 
     /**
@@ -284,6 +290,20 @@ class PostController extends Controller
         $data = array_merge($data, $roles);
 
         return view('frontend.posts.show')->with($data);
+    }
+
+    /**
+     * Show a specify post via post slug.
+     *
+     * @param string $post The post title slug
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function read($post)
+    {
+        $id = $this->post->findByField(['slug' => $post])->first()->id;
+
+        return $this->show($id);
     }
 
     /**
