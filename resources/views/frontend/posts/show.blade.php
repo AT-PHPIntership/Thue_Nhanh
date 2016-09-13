@@ -92,11 +92,12 @@
                             <a href="#comments" class="no-underline"><i class="fa fa-comments"></i> <span id="count-cmts">{!!$countComments!!}</span> @lang('frontend.post.show.comments')</a>
                         </span>
                         <span class="detail-item">
-                            <a href="#" class="no-underline"><i class="fa fa-warning"></i> @lang('frontend.post.show.report')</a>
+                            <a href="#" class="no-underline" data-toggle="modal" data-target="#model-report"><i class="fa fa-warning"></i> @lang('frontend.post.show.report')</a>
                         </span>
                         <span class="pull-right">
                             {!! App\Services\PostServices::parseHumansTime($post->created_at) !!}
                         </span>
+
                     </div>
                     <hr class="header-rule">
                     <div class="post-content">{!! $post->content !!}</div>
@@ -203,6 +204,41 @@
     </div>
 </div> <!-- /Page content -->
 
+<!--Report modal-->
+<div class="modal fade" id="model-report" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">@lang('frontend.post.show.report_this_post')</h4>
+        </div>
+        @if(Auth::user())
+        <form method="post" id="report-form">
+            <div class="modal-body">
+                {{ csrf_field() }}
+                <textarea name="description" placeholder="@lang('frontend.post.show.report_placeholder')" id="report-description" required maxlength="255"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-submit-report btn btn-primary">@lang('frontend.post.show.btn_submit_report')</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('frontend.post.show.btn_close')</button>
+            </div>
+        </form>
+        @else
+            <div class="modal-body">
+                <p>@lang('frontend.post.show.remind_login')</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('frontend.post.show.btn_close')</button>
+            </div>
+        @endif
+      </div>
+
+    </div>
+</div>
+<!--/Report modal-->
+
 @endsection
 
 @push('style-sheets')
@@ -240,11 +276,14 @@
 </script>
 <script src="{{asset('/js/frontend/comment/main.js')}}"></script>
 <script src="{{asset('/js/frontend/votes/main.js')}}"></script>
+<script src="{{asset('/js/frontend/reports/main.js')}}"></script>
 <script>
     var url = "{{route('comment.store')}}";
     var voteURL = "{{route('vote.create')}}";
     var delCmtURL = "{{route('comment.destroy')}}";
+    var reportURL = "{{route('report.store')}}";
     submitComment(url);
+    submitReport(reportURL);
     clickVote(voteURL);
     submitDelCmt(delCmtURL);
 </script>

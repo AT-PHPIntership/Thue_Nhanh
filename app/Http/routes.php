@@ -2,6 +2,18 @@
 
 /*
 |--------------------------------------------------------------------------
+| Admin dashboard Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', function () {
+        return view('backend.layouts.master');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -42,6 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/post/need/create/', ['uses' => 'PostController@showCreatingForm', 'as' => 'post.need_rent.create']);
 
     Route::post('/vote/create', ['uses' => 'VoteController@create', 'as' => 'vote.create']);
+
+    Route::post('/report/store', ['uses' => 'ReportController@store', 'as' => 'report.store']);
 });
 
 Route::get('/post/{id}', ['uses' => 'PostController@show', 'as' => 'post.show']);
