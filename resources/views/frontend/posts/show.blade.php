@@ -89,7 +89,7 @@
                             </form>
                         </span>
                         <span class="detail-item">
-                            <a href="#comments" class="no-underline"><i class="fa fa-comments"></i> {!!$countComments!!} @lang('frontend.post.show.comments')</a>
+                            <a href="#comments" class="no-underline"><i class="fa fa-comments"></i> <span id="count-cmts">{!!$countComments!!}</span> @lang('frontend.post.show.comments')</a>
                         </span>
                         <span class="detail-item">
                             <a href="#" class="no-underline"><i class="fa fa-warning"></i> @lang('frontend.post.show.report')</a>
@@ -160,7 +160,7 @@
                 @endif
                 @if(count($comments))
                     @foreach($comments as $comment)
-                        <div class="row">
+                        <div class="row row_{{$comment->id}}">
                             <div class="col-sm-1">
                                 <div class="thumbnail">
                                     <img class="img-responsive user-photo" src="{!! url(\Config::get('common.AVATAR_PATH') . $comment->user->avatar) !!}">
@@ -173,10 +173,14 @@
                                     <div class="panel-heading">
                                         <strong>{!!$comment->user->name!!}</strong>
                                         <small class="pull-right">
-                                            <span>{!! App\Services\PostServices::parseHumansTime($comment->created_at) !!}</span>
-                                            @if(Auth::user() && $comment->user->id == Auth::user()->id)
-                                                <span class="btn btn-danger btn-xs"><a href="#" class="no-underline"><i class="fa fa-trash"></i></a></span>
+                                            <span>{!! App\Services\PostServices::parseHumansTime($comment->created_at) !!}</span>&nbsp;
+                                            @if((Auth::user() && $comment->user->id == Auth::user()->id) || $isMod || $isAdmin || $isWebmaster)
+                                              <form class="del-cmt-form" method="post">
+                                                <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                                <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                                              </form>
                                             @endif
+                                            {{-- <span class="btn btn-danger btn-xs"><a href="#" class="no-underline"><i class="fa fa-trash"></i></a></span> --}}
                                         </small>
 
                                     </div>
@@ -216,6 +220,8 @@
 <script src="{{asset('/bower_resources/autosize/dist/autosize.min.js')}}"></script>
 
 <script>
+    var lang = {!! json_encode(trans('frontend')) !!};
+
     autosize($('textarea'));
 
     $(document).ready(function() {
@@ -232,12 +238,14 @@
     });
 
 </script>
-<script src="{{asset('/js/frontend/comment/create.js')}}"></script>
+<script src="{{asset('/js/frontend/comment/main.js')}}"></script>
 <script src="{{asset('/js/frontend/votes/main.js')}}"></script>
 <script>
     var url = "{{route('comment.store')}}";
     var voteURL = "{{route('vote.create')}}";
+    var delCmtURL = "{{route('comment.destroy')}}";
     submitComment(url);
     clickVote(voteURL);
+    submitDelCmt(delCmtURL);
 </script>
 @endpush

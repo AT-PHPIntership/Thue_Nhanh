@@ -122,6 +122,10 @@ return [
         'create' => [
             'fails' => 'Lỗi! Không thể gửi bình luận.',
         ],
+        'delete' => [
+            'confirm_msg'           => 'Xác nhận xoá bình luận?',
+            'fails'                 => 'Lỗi! Không thể xoá bình luận.',
+        ],
     ],
     'vote' => [
         'success'       => 'Thành công.',
