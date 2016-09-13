@@ -22,6 +22,8 @@
     "bootstrap-select": "^1.11.0",
     "tinymce": "^4.4.2",
     "jquery-locationpicker-plugin": "^0.1.12",
-    "autosize": "^3.0.17"
+    "autosize": "^3.0.17",
+    "AdminLTE": "admin-lte#^2.3.6",
+    "Ionicons": "ionicons#^2.0.1"
   }
 }

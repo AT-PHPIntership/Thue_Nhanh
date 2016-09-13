@@ -1,0 +1,38 @@
+<?php
+
+return [
+    'common'            => [
+        'logo'              => 'ThueNhanh.net',
+        'mini_logo'         => 'TN',
+        'toggle_nav'        => 'Điều hướng',
+        'logout'            => 'Thoát',
+        'management'        => 'Quản Lý',
+        'posts'             => 'Bài Đăng',
+        'posts_activated'   => 'Đang Hoạt Động',
+        'posts_waitting'    => 'Đang Chờ Duyệt',
+        'posts_closed'      => 'Đã Đóng',
+        'posts_deleted'     => 'Đã xoá',
+        'reports'           => 'Báo cáo',
+        'reports_waitting'  => 'Chờ Xử Lý',
+        'reports_processed' => 'Đã Xử Lý',
+        'accounts'          => 'Tài Khoản',
+        'acc_admins'        => 'Ban Quản Trị',
+        'acc_mems'          => 'Thành Viên',
+        'acc_deactivated'   => 'Chưa Kích Hoạt',
+        'acc_banned'        => 'Đã Bị Khoá',
+        'categories'        => 'Chuyên Mục',
+        'repo'              => 'GitHub Repo',
+        'copyright'         => 'Copyright &copy; 2016',
+        'rights'            => 'All rights reserved.',
+        'author'            => 'at-sontd',
+        '' => '',
+        '' => '',
+        '' => '',
+        '' => '',
+        '' => '',
+        '' => '',
+        '' => '',
+        '' => '',
+    ],
+
+];
