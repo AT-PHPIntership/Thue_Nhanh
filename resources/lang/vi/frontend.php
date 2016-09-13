@@ -103,7 +103,13 @@ return [
             'address' => 'Địa chỉ',
             'name' => 'Tên: ',
             'phone' => 'ĐT: ',
-            'city' => 'Tỉnh/TP: '
+            'city' => 'Tỉnh/TP: ',
+            'report_this_post' => 'Báo cáo bài đăng phạm quy',
+            'remind_login' => 'Vui lòng đăng nhập để gửi báo cáo!',
+            'btn_close' => 'Đóng',
+            'report_placeholder' => 'Vui lòng nêu rõ nội dung vi phạm...',
+            'btn_submit_report' => 'Gửi',
+            'thanks_for_reportting' => 'Xin cám ơn, báo cáo của bạn đã được gửi lên hệ thống!',
         ],
         'index' => [
             'need_rent'             => 'Cần Thuê',
@@ -126,5 +132,15 @@ return [
     'vote' => [
         'success'       => 'Thành công.',
         'fails'         => 'Lỗi, thử lại sau!',
+    ],
+    'report' => [
+        'validation' => [
+            'required'      => 'Vui lòng giải thích nội dung báo cáo.',
+            'max'           => 'Mô tả vi phạm ngắn gọi trong :max ký tự.',
+        ],
+        'create' => [
+            'success'       => 'Thành công.',
+            'fails'         => 'Lỗi, thử lại sau!',
+        ],
     ],
 ];
