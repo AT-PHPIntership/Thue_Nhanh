@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 use App\Exceptions\InvalidConfirmationCodeException;
+use App\Exceptions\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {
@@ -54,6 +55,10 @@ class Handler extends ExceptionHandler
                 return $this->renderException($e);
                 break;
 
+            case ($e instanceof UnauthorizedException):
+                return $this->renderException($e);
+                break;
+
             default:
                 return parent::render($request, $e);
         }
@@ -71,6 +76,10 @@ class Handler extends ExceptionHandler
         switch ($e) {
             case ($e instanceof InvalidConfirmationCodeException):
                 return view('errors.404');
+                break;
+
+            case ($e instanceof UnauthorizedException):
+                return view('errors.401');
                 break;
 
             default:

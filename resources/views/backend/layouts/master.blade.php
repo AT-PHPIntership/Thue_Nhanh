@@ -24,6 +24,8 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!-- Custom Css -->
+  <link rel="stylesheet" href="{{asset('/css/backend/main.css')}}">
   @stack('style-sheets')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -40,7 +42,9 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-    @yield('content-header')
+      <h1>
+        @yield('content-header')
+      </h1>
     </section>
     <!-- Main content -->
     <section class="content">

@@ -25,4 +25,5 @@ return [
     'HTTP_CREATED_STATUS'       => 201,
     'HTTP_BAD_REQUEST_STATUS'   => 400,
     'POSTS_PER_PAGE'            => 20,
+    'HTTP_UNAUTHORIZED'         => 401,
 ];
