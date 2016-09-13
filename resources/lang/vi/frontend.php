@@ -111,6 +111,13 @@ return [
             'btn_submit_report' => 'Gửi',
             'thanks_for_reportting' => 'Xin cám ơn, báo cáo của bạn đã được gửi lên hệ thống!',
         ],
+        'index' => [
+            'need_rent'             => 'Cần Thuê',
+            'for_rent'              => 'Cho Thuê',
+            'home'                  => 'Trang Chủ',
+            'category'              => 'Chuyên mục',
+            'unit'                  => '/giờ thuê',
+        ],
     ],
     'comment' => [
         'validation' => [
