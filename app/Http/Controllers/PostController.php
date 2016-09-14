@@ -295,7 +295,8 @@ class PostController extends Controller
     /**
      * Show a specify post via post slug.
      *
-     * @param string $post The post title slug
+     * @param string $category The category title slug
+     * @param string $post     The post title slug
      *
      * @return \Illuminate\Http\Response
      */
