@@ -256,3 +256,7 @@ a.no-link-color:hover {
     color: inherit;
     cursor: pointer;
 }
+
+.del-cmt-form {
+    float: right;
+}

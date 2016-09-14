@@ -116,14 +116,16 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param \Illuminate\Http\Request $request the request
      *
      * @return \Illuminate\Http\Response
      */
-    /*
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $deleting = $this->comment->delete($request->id);
+            return $deleting ? response()->json(['commentID' => $request->id], Config::get('common.HTTP_CREATED_STATUS'))
+                             : response()->json(['responseText' => trans('frontend.comment.delete.fails')], Config::get('common.HTTP_BAD_REQUEST_STATUS'));
+        }
     }
-    */
 }
