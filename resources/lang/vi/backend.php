@@ -33,4 +33,16 @@ return [
         'access_denied'     => 'Truy cập bị từ chối!',
         '401_message'       => 'Bạn chưa đăng nhập hoặc không có quyền truy cập vào địa chỉ này!',
     ],
+    'posts'             => [
+        'waitcensor'        => [
+            'title'             => 'Danh Sách Chờ Duyệt',
+            'field_title'       => 'Tiêu Đề',
+            'field_category'    => 'Chuyên Mục',
+            'field_city'        => 'Tỉnh/Thành Phố',
+            'field_user'        => 'Người Đăng',
+            'field_time'        => 'Thời Gian',
+            'field_options'     => 'Lựa Chọn',
+            '' => '',
+        ],
+    ],
 ];

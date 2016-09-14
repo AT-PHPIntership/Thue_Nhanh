@@ -299,11 +299,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function read($post)
+    public function read($category, $post)
     {
-        $id = $this->post->findByField(['slug' => $post])->first()->id;
-
-        return $this->show($id);
+        $post = $this->post->with('category')->findByField(['slug' => $post])->first();
+        if ($post && $post->category->slug == $category) {
+            return $this->show($post->id);
+        }
+        abort(\Config::get('common.HTTP_NOT_FOUND'), null);
     }
 
     /**

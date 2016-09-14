@@ -113,4 +113,27 @@ class Post extends Model implements Transformable
     {
         return $this->hasMany('App\Models\Notification', 'post_id');
     }
+
+    /**
+     * Scope a query to only include posts of a given condition.
+     *
+     * @param string $query query string
+     * @param string $field the table field
+     * @param string $value given value
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeHaving($query, $field, $value)
+    {
+        switch (strtolower($value)) {
+            case 'null':
+                return $query->whereNull($field);
+
+            case 'notnull':
+                return $query->whereNotNull($field);
+
+            default:
+                return $this->where($field, $value);
+        }
+    }
 }
