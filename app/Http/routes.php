@@ -7,8 +7,10 @@
 |
 */
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', function () {
-        return view('backend.layouts.master');
+    Route::group(['middleware' => ['auth', 'roles'], 'roles' => ['Admin', 'Webmaster', 'Mod']], function () {
+        Route::get('/post/waitcensor', function () {
+            return view('backend.layouts.master');
+        });
     });
 });
 

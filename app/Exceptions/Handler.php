@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 use App\Exceptions\InvalidConfirmationCodeException;
+use App\Exceptions\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {

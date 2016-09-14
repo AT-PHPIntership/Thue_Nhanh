@@ -25,14 +25,12 @@ return [
         'copyright'         => 'Copyright &copy; 2016',
         'rights'            => 'All rights reserved.',
         'author'            => 'at-sontd',
-        '' => '',
-        '' => '',
-        '' => '',
-        '' => '',
-        '' => '',
-        '' => '',
-        '' => '',
-        '' => '',
+        'insufficient_role' => 'Tài khoản không có quyền truy cập.',
     ],
-
+    'errors'            => [
+        '401'               => 'Truy Cập Bị Từ Chối',
+        'unauthorized'      => 'Unauthorized',
+        'access_denied'     => 'Truy cập bị từ chối!',
+        '401_message'       => 'Bạn chưa đăng nhập hoặc không có quyền truy cập vào địa chỉ này!',
+    ],
 ];

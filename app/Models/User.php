@@ -120,4 +120,39 @@ class User extends Authenticatable implements Transformable
     {
         return $this->hasMany('App\Models\Post', 'reviewed_by');
     }
+
+    /**
+     * Check if user has any role in input roles
+     *
+     * @param array $roles the required roles
+     *
+     * @return boolean
+     */
+    public function hasRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->checkIfUserHasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            return $this->checkIfUserHasRole($roles);
+        }
+        return false;
+    }
+
+    /**
+     * Check if user has specify role.
+     *
+     * @param string $role the role need to be checked
+     *
+     * @return boolean
+     */
+    private function checkIfUserHasRole($role)
+    {
+        $role = ucfirst($role);
+        $userRoles = $this->roles->where('name', $role)->first();
+        return $userRoles ? true : false;
+    }
 }
