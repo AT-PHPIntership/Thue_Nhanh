@@ -25,8 +25,6 @@ class VoteRepositoryEloquent extends BaseRepository implements VoteRepository
         return Vote::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      *
@@ -50,5 +48,28 @@ class VoteRepositoryEloquent extends BaseRepository implements VoteRepository
         return $this->model->with('user')->where('post_id', $post)
                            ->where('user_id', $id)
                            ->first() ? true : false;
+    }
+
+    /**
+     * Delete all votes of a specify post.
+     *
+     * @param int $postID The post's id
+     *
+     * @return boolean
+     */
+    public function delete($postID)
+    {
+        $result = true;
+        $votes = $this->model->where('post_id', $postID);
+        if (!$votes) {
+            return $result;
+        }
+        foreach ($votes as $vote) {
+            $deleting = $vote->delete();
+            if (!$deleting) {
+                $result = false;
+            }
+        }
+        return $result;
     }
 }

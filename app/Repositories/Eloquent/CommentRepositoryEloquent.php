@@ -25,8 +25,6 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
         return Comment::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      *
@@ -35,5 +33,27 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * Remove comments of the specified post.
+     *
+     * @param int $postID the post's id
+     *
+     * @return boolean
+     */
+    public function delete($postID)
+    {
+        $result = true;
+        $comments = $this->model->where('post_id', $postID);
+        if ($comments) {
+            foreach ($comments as $comment) {
+                $deleting = $comment->delete();
+                if (!$deleting) {
+                    $result = false;
+                }
+            }
+        }
+        return $result;
     }
 }

@@ -7,3 +7,11 @@ function setActiveTab(currentTab) {
         $('.needRent-nav').attr("class", "needRent-nav active");
     }
 };
+
+function setFormAction(url) {
+    $(document).on('click', ".btn-del", function() {
+      var postID = $(this).next().val();
+      $('#del-post-id').val(postID);
+      $('#delete-form').attr('action', url + '/' + postID);
+    });
+}

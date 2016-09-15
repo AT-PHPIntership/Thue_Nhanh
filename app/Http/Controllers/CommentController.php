@@ -12,7 +12,6 @@ use App\Repositories\Eloquent\CommentRepositoryEloquent;
 
 class CommentController extends Controller
 {
-
     /**
      * The comment Repository eloquent instance.
      *

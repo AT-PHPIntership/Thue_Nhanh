@@ -42,7 +42,12 @@ return [
             'field_user'        => 'Người Đăng',
             'field_time'        => 'Thời Gian',
             'field_options'     => 'Lựa Chọn',
-            '' => '',
+            'del_confirm'       => 'Xác Nhận',
+            'del_msg'           => 'Xác nhận xoá bài viết này?',
+            'btn_cancel'        => 'Huỷ',
+            'btn_yes'           => 'Xoá',
+            'del_success'       => 'Đã xoá!',
+            'del_fails'         => 'Lỗi! Không thể xoá.',
         ],
     ],
 ];

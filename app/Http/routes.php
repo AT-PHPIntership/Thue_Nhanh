@@ -45,7 +45,9 @@ Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@r
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('post', 'PostController', ['except' => ['show', 'index']]);
+    Route::resource('post', 'PostController', ['except' => ['show', 'index', 'destroy']]);
+
+    Route::delete('/post/{id?}', ['uses' => 'PostController@destroy', 'as' => 'post.destroy']);
 
     Route::resource('comment', 'CommentController', ['except' => ['destroy']]);
 

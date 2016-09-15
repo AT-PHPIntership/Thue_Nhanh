@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Image;
+use Event;
 use Storage;
 use Exception;
 use App\Models\Post;
 use App\Http\Requests;
+use App\Events\PostDeleted;
 use App\Services\VoteServices;
 use App\Services\PostServices;
 use App\Services\CommentServices;
@@ -345,10 +347,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
     public function destroy($id)
     {
-        //
+        Event::fire(new PostDeleted($id));
+        $deleting = $this->post->delete($id);
+        return $deleting ? redirect()->back()->withMessage(trans('backend.posts.waitcensor.del_success'))
+                         : redirect()->back()->withErrors(trans('backend.posts.waitcensor.del_fails'));
     }
-    */
 }
