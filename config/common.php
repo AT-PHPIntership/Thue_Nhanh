@@ -26,4 +26,5 @@ return [
     'HTTP_BAD_REQUEST_STATUS'   => 400,
     'POSTS_PER_PAGE'            => 20,
     'HTTP_UNAUTHORIZED'         => 401,
+    'HTTP_NOT_FOUND'            => 404,
 ];

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Image;
+use Event;
 use Storage;
 use Exception;
 use App\Models\Post;
 use App\Http\Requests;
+use App\Events\PostDeleted;
 use App\Services\VoteServices;
 use App\Services\PostServices;
 use App\Services\CommentServices;
@@ -295,15 +297,18 @@ class PostController extends Controller
     /**
      * Show a specify post via post slug.
      *
-     * @param string $post The post title slug
+     * @param string $category The category title slug
+     * @param string $post     The post title slug
      *
      * @return \Illuminate\Http\Response
      */
-    public function read($post)
+    public function read($category, $post)
     {
-        $id = $this->post->findByField(['slug' => $post])->first()->id;
-
-        return $this->show($id);
+        $post = $this->post->with('category')->findByField(['slug' => $post])->first();
+        if ($post && $post->category->slug == $category) {
+            return $this->show($post->id);
+        }
+        abort(\Config::get('common.HTTP_NOT_FOUND'), null);
     }
 
     /**
@@ -342,10 +347,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
     public function destroy($id)
     {
-        //
+        $deleting = $this->post->delete($id);
+        if (!$deleting) {
+            return redirect()->back()->withErrors(trans('backend.posts.waitcensor.del_fails'));
+        }
+        Event::fire(new PostDeleted($id));
+        return redirect()->back()->withMessage(trans('backend.posts.waitcensor.del_success'));
     }
-    */
 }

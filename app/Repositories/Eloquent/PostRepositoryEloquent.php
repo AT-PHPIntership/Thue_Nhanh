@@ -25,8 +25,6 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
         return Post::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      *
@@ -53,5 +51,23 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
                     ->where('type', $type)
                     ->whereNotNull('reviewed_by')
                     ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get posts with the condition.
+     *
+     * @param string $field the table field
+     * @param string $value given value
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function where($field, $value)
+    {
+        return $this->model->with('category')
+                    ->with('city')
+                    ->with('user')
+                    ->having($field, $value)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
     }
 }

@@ -8,9 +8,7 @@
 */
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => ['auth', 'roles'], 'roles' => ['Admin', 'Webmaster', 'Mod']], function () {
-        Route::get('/post/waitcensor', function () {
-            return view('backend.layouts.master');
-        });
+        Route::get('/post/waitcensor', ['uses' => 'Backend\PostController@waitCensor', 'as' => 'admin.post.waitcensor']);
     });
 });
 
@@ -47,7 +45,9 @@ Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@r
 Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('post', 'PostController', ['except' => ['show', 'index']]);
+    Route::resource('post', 'PostController', ['except' => ['show', 'index', 'destroy']]);
+
+    Route::delete('/post/{id?}', ['uses' => 'PostController@destroy', 'as' => 'post.destroy']);
 
     Route::resource('comment', 'CommentController', ['except' => ['destroy']]);
 

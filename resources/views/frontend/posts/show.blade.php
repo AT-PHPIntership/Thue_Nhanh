@@ -272,7 +272,6 @@
             zoom: zoom
         });
     });
-
 </script>
 <script src="{{asset('/js/frontend/comment/main.js')}}"></script>
 <script src="{{asset('/js/frontend/votes/main.js')}}"></script>
