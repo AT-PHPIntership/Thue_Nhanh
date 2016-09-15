@@ -99,13 +99,5 @@
 
     var delPostURL = "{{route('post.destroy')}}";
     setFormAction(delPostURL);
-    // $(document).ready(function() {
-    //   $(document).on('click', ".btn-del", function() {
-    //     var postID = $(this).next().val();
-    //     var formAction = "{{route('post.destroy')}}";
-    //     $('#del-post-id').val(postID);
-    //     $('#delete-form').attr('action', formAction + '/' + postID);
-    //   });
-    // });
   </script>
 @endpush

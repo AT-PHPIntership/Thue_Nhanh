@@ -349,9 +349,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Event::fire(new PostDeleted($id));
         $deleting = $this->post->delete($id);
-        return $deleting ? redirect()->back()->withMessage(trans('backend.posts.waitcensor.del_success'))
-                         : redirect()->back()->withErrors(trans('backend.posts.waitcensor.del_fails'));
+        if (!$deleting) {
+            return redirect()->back()->withErrors(trans('backend.posts.waitcensor.del_fails'));
+        }
+        Event::fire(new PostDeleted($id));
+        return redirect()->back()->withMessage(trans('backend.posts.waitcensor.del_success'));
     }
 }
