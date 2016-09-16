@@ -15,3 +15,10 @@ function setFormAction(url) {
       $('#delete-form').attr('action', url + '/' + postID);
     });
 }
+
+function initMap(location, radius) {
+    $('#map').locationpicker({
+        location: location,
+        radius: radius
+    });
+}

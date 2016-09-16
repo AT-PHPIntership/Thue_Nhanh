@@ -318,12 +318,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
     public function edit($id)
     {
-        //
+
+        $post = $this->post->with('user')
+                           ->with('photos')
+                           ->find($id);
+        $post['chosenDays'] = json_decode($post->chosen_days);
+        // dd($post->chosenDays[1]->date);
+        $userRoles = $this->user->find(Auth::user()->id)->roles->pluck('name');
+        $userRoles = PostServices::getRoles($userRoles);
+
+        if (!$post) {
+            return redirect()->back();
+        }
+
+        $data['categories'] = $this->category->all();
+        $data['cities'] = $this->city->all();
+        $author = $post->user->id == Auth::user()->id;
+
+        if ($author || $userRoles['isMod'] || $userRoles['isAdmin'] || $userRoles['isWebmaster']) {
+            $data['post'] = $post;
+            return view('frontend.posts.edit')->with($data);
+        }
+        return redirect()->back();
     }
-    */
 
     /**
      * Update the specified resource in storage.

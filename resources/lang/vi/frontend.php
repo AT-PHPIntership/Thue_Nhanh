@@ -118,6 +118,13 @@ return [
             'category'              => 'Chuyên mục',
             'unit'                  => '/giờ thuê',
         ],
+        'edit' => [
+            'title'                 => 'Chỉnh Sửa',
+            'accept'                => 'Chấp nhận',
+            'deny'                  => 'Không chấp nhận',
+            'review_status'         => 'Kiểm Duyệt',
+            'submit'                => 'Lưu',
+        ],
     ],
     'comment' => [
         'validation' => [
