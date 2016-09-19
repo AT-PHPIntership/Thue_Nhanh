@@ -27,4 +27,7 @@ return [
     'POSTS_PER_PAGE'            => 20,
     'HTTP_UNAUTHORIZED'         => 401,
     'HTTP_NOT_FOUND'            => 404,
+    'POST_ACCEPT'               => 1,
+    'POST_DENY'                 => 0,
+    'DATETIME_FORMAT_DB'        => 'Y-m-d H:i:s',
 ];

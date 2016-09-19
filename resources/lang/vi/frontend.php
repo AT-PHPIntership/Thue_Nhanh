@@ -118,6 +118,17 @@ return [
             'category'              => 'Chuyên mục',
             'unit'                  => '/giờ thuê',
         ],
+        'edit' => [
+            'title'                 => 'Chỉnh Sửa',
+            'accept'                => 'Chấp nhận',
+            'deny'                  => 'Không chấp nhận',
+            'review_status'         => 'Kiểm Duyệt',
+            'submit'                => 'Lưu',
+            'close'                 => 'Đóng',
+            'show_photos'           => 'Duyệt hình ảnh',
+            'post_status'           => 'Đóng bài đăng',
+            'option'                => 'Lựa chọn',
+        ],
     ],
     'comment' => [
         'validation' => [

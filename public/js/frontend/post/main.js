@@ -15,3 +15,19 @@ function setFormAction(url) {
       $('#delete-form').attr('action', url + '/' + postID);
     });
 }
+
+function initMap(location, radius) {
+    $('#map').locationpicker({
+        location: location,
+        radius: radius
+    });
+}
+
+function checkUpdate() {
+    $('form').submit(function() {
+        if(!$('#content').val()) {
+            alert(lang.post.create.no_content);
+            return false;
+        }
+    });
+}

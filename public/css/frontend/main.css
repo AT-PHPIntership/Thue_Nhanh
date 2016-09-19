@@ -124,7 +124,7 @@
     border-bottom: 5px solid #5cb85c;
 }
 
-#location {
+#location, #map {
     width: 100%;
     height: 400px;
 }
