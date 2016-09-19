@@ -22,3 +22,12 @@ function initMap(location, radius) {
         radius: radius
     });
 }
+
+function checkUpdate() {
+    $('form').submit(function() {
+        if(!$('#content').val()) {
+            alert(lang.post.create.no_content);
+            return false;
+        }
+    });
+}

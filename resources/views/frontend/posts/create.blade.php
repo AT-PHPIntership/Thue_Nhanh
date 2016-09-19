@@ -225,6 +225,10 @@
                 $(location).attr('href', urlType0);
             }
         });
+
+        checkFileSelected();
+        // Check if there's a file selected when submit.
+        checkSubmit();
     });
 </script>
 @endpush

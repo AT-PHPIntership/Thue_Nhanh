@@ -44,7 +44,7 @@ tinymce.init({
 // Show small thumbnail images before uploading
 const EXTNS = ["jpg", "jpeg", "png", "gif"];
 
-$(document).ready(function() {
+function checkFileSelected() {
     var toggle_img = $('.toggle-img');
     var image_holder = $("#image-holder");
     var toggle_btn = $('#toggle-btn');
@@ -88,16 +88,9 @@ $(document).ready(function() {
         image_holder.toggle();
         $("i",this).toggleClass("fa-angle-double-down fa-angle-double-up");
     });
-});
+}
 
-// show/hide the map
-$(document).ready(function() {
-    $('.toggle-map').click(function() {
-        $('.map_holder').toggle();
-        $("i",this).toggleClass('fa-caret-up fa-caret-down');
-    });
-
-    // Check if there's a file selected when submit.
+function checkSubmit() {
     $('form').submit(function() {
         var content = $('#content').val();
         var fileSelected = $('#photos').val();
@@ -114,5 +107,13 @@ $(document).ready(function() {
             alert(lang.post.create.no_content);
             return false;
         }
+    });
+}
+
+// show/hide the map
+$(document).ready(function() {
+    $('.toggle-map').click(function() {
+        $('.map_holder').toggle();
+        $("i",this).toggleClass('fa-caret-up fa-caret-down');
     });
 });

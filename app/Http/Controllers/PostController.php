@@ -320,7 +320,6 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
         $post = $this->post->with('user')
                            ->with('photos')
                            ->find($id);
@@ -335,10 +334,13 @@ class PostController extends Controller
 
         $data['categories'] = $this->category->all();
         $data['cities'] = $this->city->all();
+        $data['photos'] = $this->photo->findByField('post_id', $id);
         $author = $post->user->id == Auth::user()->id;
 
         if ($author || $userRoles['isMod'] || $userRoles['isAdmin'] || $userRoles['isWebmaster']) {
             $data['post'] = $post;
+            $data = array_merge($data, $userRoles);
+
             return view('frontend.posts.edit')->with($data);
         }
         return redirect()->back();
@@ -352,13 +354,62 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
     public function update(Request $request, $id)
     {
-        //
-    }
-    */
+        $input = $request->only([
+            'category_id', 'city_id', 'address', 'lat', 'lng', 'phone_number', 'type',
+            'title', 'content', 'cost', 'time_begin', 'time_end', 'start_date',
+            'end_date', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'
+        ]);
 
+        $validator = PostServices::updateingValidator($input);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+        $chosenDays = $this->makeJsonDays($request);
+        $request['chosen_days'] = $chosenDays;
+
+        $post = $this->post->find($id);
+
+        if (!$post) {
+            return redirect()->back();
+        }
+        if ($request->review_status) {
+            $request['reviewed_by'] = Auth::user()->id;
+            $request['reviewed_at'] = date(\Config::get('common.DATETIME_FORMAT_DB'), time());
+        } else {
+            $request['reviewed_by'] = null;
+            $request['reviewed_at'] = null;
+        }
+        if ($request->has('closed_at')) {
+            $request['closed_at'] = date(\Config::get('common.DATETIME_FORMAT_DB'), time());
+        } else {
+            $request['closed_at'] = null;
+        }
+        $updating = $post->update($request->all());
+
+        return $updating ? redirect()->route('post.read', ['category' => $post->category->slug, 'post' => $post->slug])
+                         : redirect()->back()->withInput($request->all());
+    }
+
+    /**
+     * Retrieve choices day then encode json.
+     *
+     * @param Request $request the request
+     *
+     * @return json
+     */
+    protected function makeJsonDays(Request $request)
+    {
+        $weekDays = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
+        $chosen = [];
+        foreach ($weekDays as $day) {
+            $request->has($day) ? $choice = ['date' => $day, 'chosen' => true]
+                                : $choice = ['date' => $day, 'chosen' => false];
+            array_push($chosen, $choice);
+        }
+        return json_encode($chosen);
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -20,7 +20,7 @@
   </div>
   <form id="update-post" action="{{route('post.update', ['post' => $post->id])}}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
-
+    <input type="hidden" name="_method" value="PATCH">
     <div class="form-group col-md-12">
       <label for="type" class="col-md-3 control-label">@lang('frontend.post.create.post_type')</label>
       <div class="col-md-9">
@@ -109,25 +109,6 @@
                title="@lang('frontend.post.create.title_cost')">
       </div>
     </div>
-
-{{--
-    <div class="form-group col-md-12">
-      <label for="photos" class="col-md-3 control-label">@lang('frontend.post.create.photo')</label>
-      <div class="col-md-9">
-        <label class="btn btn-primary btn-file" for="photos"
-               data-toggle="tooltip" data-placement="bottom"
-               title="@lang('frontend.post.create.title_cost')">
-          @lang('frontend.post.create.browse')
-          <input type="file" name="photos[]" id="photos" multiple>
-        </label>
-        <div class="toggle-img">
-            <i id="toggle-btn" class="fa fa-angle-double-up pull-right btn btn-xs btn-primary"></i>
-        </div>
-        <div id="image-holder">
-        </div>
-      </div>
-    </div>
---}}
     <div class="form-group col-md-12">
       <label class="col-md-3 control-label">@lang('frontend.post.create.time')</label>
       <div class="col-md-4">
@@ -152,7 +133,7 @@
                title="@lang('frontend.post.create.title_week_days')">
           <tr>
           @foreach($post['chosenDays'] as $index => $date)
-            <td><input type="checkbox" name="{{$date->date}}" {{$date->chosen ? 'checked' : null}}>{!! trans('frontend.post.create.' . $date->date) !!}</td>
+            <td><input type="checkbox" name="{{strtolower($date->date)}}" {{$date->chosen ? 'checked' : null}}>{!! trans('frontend.post.create.' . strtolower($date->date)) !!}</td>
             @if($index == 2)
           </tr>
           <tr>
@@ -184,18 +165,35 @@
         <textarea name="content" id="content" rows="10" class="form-control">{{$post->content}}</textarea>
       </div>
     </div>
-    <div class="form-group col-md-12"><hr></div>
     <div class="form-group col-md-12">
-      <label for="content" class="col-md-3 control-label">@lang('frontend.post.edit.review_status')</label>
-      <label class="col-md-3">
-        <input type="radio" name="accept" value="{{\Config::get('common.POST_ACCEPT')}}" checked>
-        @lang('frontend.post.edit.accept')
-      </label>
-      <label class="col-md-6">
-        <input type="radio" name="deny" value="{{\Config::get('common.POST_DENY')}}">
-        @lang('frontend.post.edit.deny')
-      </label>
+      <label for="photos" class="col-md-3 control-label">@lang('frontend.post.create.photo')</label>
+      <div class="col-md-9">
+        <a href="#" data-toggle="modal" data-target="#showPhotos">@lang('frontend.post.edit.show_photos')</a>
+      </div>
     </div>
+    @if($isMod || $isAdmin || $isWebmaster)
+      <div class="form-group col-md-12"><hr></div>
+      <div class="form-group col-md-12">
+        <label for="content" class="col-md-3 control-label">@lang('frontend.post.edit.review_status')</label>
+        <label class="col-md-3">
+          <input type="radio" name="review_status" value="{{\Config::get('common.POST_ACCEPT')}}" {{$post->reviewed_at ? "checked" : null}}>
+          @lang('frontend.post.edit.accept')
+        </label>
+        <label class="col-md-6">
+          <input type="radio" name="review_status" value="{{\Config::get('common.POST_DENY')}}" {{!$post->reviewed_at ? "checked" : null}}>
+          @lang('frontend.post.edit.deny')
+        </label>
+      </div>
+    @endif
+    @if(Auth::user()->id == $post->id || $isMod || $isAdmin || $isWebmaster)
+      <div class="form-group col-md-12">
+        <label for="content" class="col-md-3 control-label">@lang('frontend.post.edit.option')</label>
+        <label class="col-md-9">
+          <input type="checkbox" name="closed_at" {{$post->closed_at ? "checked" : null}}>
+          @lang('frontend.post.edit.post_status')
+        </label>
+      </div>
+    @endif
     <div class="form-group col-md-12"><hr></div>
     <div class="form-group col-md-12 text-center">
       <button type="submit" class="btn btn-primary">@lang('frontend.post.edit.submit')</button>
@@ -207,6 +205,55 @@
 <div class="col-sm-3 text-center">
 
 </div> <!--/Tips-->
+
+<!-- modal -->
+<div class="modal fade" id="showPhotos" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">@lang('backend.posts.waitcensor.del_confirm')</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Slide show -->
+        <div id="postCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#postCarousel" data-slide-to="0" class="active"></li>
+              @for($i=1; $i < count($photos); $i++)
+                <li data-target="#postCarousel" data-slide-to="{{$i}}"></li>
+              @endfor
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="{{url(\Config::get('common.POST_PHOTOS_PATH') . $photos->first()->file_name)}}" alt="{{$photos->first()->file_name}}">
+              </div>
+              @for($i=1; $i < count($photos); $i++)
+              <div class="item">
+                <img src="{{url(\Config::get('common.POST_PHOTOS_PATH').$photos[$i]->file_name)}}" alt="{{$photos[$i]->file_name}}">
+              </div>
+              @endfor
+            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#postCarousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">@lang('frontend.post.show.previous')</span>
+            </a>
+            <a class="right carousel-control" href="#postCarousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">@lang('frontend.post.show.next')</span>
+            </a>
+          </div>
+        <!-- /Slide show -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('frontend.post.edit.close')</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
 @endsection
 
 @push('scripts')
@@ -220,6 +267,8 @@
 <script src="{{asset('/bower_resources/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
 <!-- TinyMce -->
 <script src="{{asset('/bower_resources/tinymce/tinymce.min.js')}}"></script>
+<!-- Fresco -->
+<script src="{{asset('/bower_resources/frescojs-light/js/fresco/fresco.js')}}"></script>
 
 <!--Custom scripts-->
 <script src="{{asset('/js/frontend/post/create.js')}}"></script>
@@ -240,21 +289,13 @@ $(document).ready(function(){
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
-
-        // Redirect if change post type
-        $('#type').change(function() {
-            const POST_TYPE_NEED = 0;
-            var typeSelected = $(this).val();
-            var urlType0 = "{{route('post.need_rent.create')}}";
-            if(typeSelected == POST_TYPE_NEED) {
-                $(location).attr('href', urlType0);
-            }
-        });
+        checkUpdate();
     });
 </script>
 @endpush
 
 @push('style-sheets')
 <link rel="stylesheet" href="{{asset('/bower_resources/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
+<link rel="stylesheet" href="{{asset('/bower_resources/frescojs-light/css/fresco/fresco.css')}}">
 <link rel="stylesheet" href="{{asset('/css/frontend/main.css')}}">
 @endpush
