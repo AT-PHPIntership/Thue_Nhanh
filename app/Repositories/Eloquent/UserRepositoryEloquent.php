@@ -36,4 +36,16 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    public function having($field, $value)
+    {
+        return $this->model
+                    ->where($field, $value)
+                    ->with('profile')
+                    ->with('roles')
+                    ->join('profiles', 'users.id', '=', 'profiles.user_id')
+                    ->join('cities', 'cities.id', '=', 'profiles.city_id')
+                    ->select('users.id', 'users.name', 'users.created_at', 'users.email', 'cities.name as city')
+                    ->get();
+    }
 }

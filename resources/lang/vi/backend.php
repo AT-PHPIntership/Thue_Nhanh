@@ -50,4 +50,33 @@ return [
             'del_fails'         => 'Lỗi! Không thể xoá.',
         ],
     ],
+    'users'             => [
+        'members'           => [
+            'title'             => 'Thành Viên',
+            'id'                => 'ID',
+            'name'              => 'Tên',
+            'email'             => 'Email',
+            'city'              => 'Tỉnh/TP',
+            'date'              => 'Ngày Tham Gia',
+            'options'           => 'Lựa Chọn',
+            'ban_confirmation'  => 'Khoá Tài Khoản',
+            'ban_confirm_msg'   => 'Xác nhận cấm truy cập tài khoản này?',
+            'btn_ban'           => 'Khoá',
+            'btn_close'         => 'Huỷ',
+            'btn_set'           => 'Lưu',
+            'config_title'      => 'Cài Đặt Quyền',
+            'mod'               => 'Mod',
+            'admin'             => 'Admin',
+            'd_mod_l1'          => 'Kiểm duyệt bài.',
+            'd_mod_l2'          => 'Xoá bài.',
+            'd_mod_l3'          => 'Xoá bình luận.',
+            'd_admin_l1'        => 'Xử lý báo cáo.',
+            'd_admin_l2'        => 'Khoá/Mở tài khoản.',
+            'd_admin_l3'        => 'Cấp/Huỷ quyền Mod cho thành viên.',
+            'cog_success'       => 'Đã cập nhật quyền cho tài khoản :user',
+            'cog_fails'         => 'Lỗi, không thể cập nhật quyền lúc này!',
+            'ban_success'       => 'Tài khoản :user đã bị khoá!',
+            'ban_fails'         => 'Lỗi, không thể khoá tài khoản lúc này!',
+        ]
+    ]
 ];

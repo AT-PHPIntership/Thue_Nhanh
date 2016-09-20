@@ -30,4 +30,10 @@ return [
     'POST_ACCEPT'               => 1,
     'POST_DENY'                 => 0,
     'DATETIME_FORMAT_DB'        => 'Y-m-d H:i:s',
+    'TIMEDATE_FORMAT_HUMAN'     => 'H:i:s d/m/Y',
+    'DATETIME_FORMAT_HUMAN'     => 'd/m/Y H:i:s',
+    'ROLE_MEM_VAL'              => 4,
+    'ROLE_MOD_VAL'              => 3,
+    'ROLE_ADMIN_VAL'            => 2,
+    'ROLE_WEBMASTER_VAL'        => 1,
 ];

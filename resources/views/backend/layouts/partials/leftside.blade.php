@@ -22,7 +22,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.posts_activated')</a></li>
-          <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.posts_waitting')</a></li>
+          <li><a href="{{route('admin.post.waitcensor')}}"><i class="fa fa-circle-o"></i> @lang('backend.common.posts_waitting')</a></li>
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.posts_closed')</a></li>
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.posts_deleted')</a></li>
         </ul>
@@ -44,7 +44,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.acc_admins')</a></li>
-          <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.acc_mems')</a></li>
+          <li><a href="{{route('admin.user.member')}}"><i class="fa fa-circle-o"></i> @lang('backend.common.acc_mems')</a></li>
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.acc_deactivated')</a></li>
           <li><a href=""><i class="fa fa-circle-o"></i> @lang('backend.common.acc_banned')</a></li>
         </ul>
