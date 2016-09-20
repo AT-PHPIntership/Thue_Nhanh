@@ -155,9 +155,4 @@ class User extends Authenticatable implements Transformable
         $userRoles = $this->roles->where('name', $role)->first();
         return $userRoles ? true : false;
     }
-
-    public static function findByField($field, $value)
-    {
-        return self::where($field, $value)->with('profile')->with('roles')->get();
-    }
 }

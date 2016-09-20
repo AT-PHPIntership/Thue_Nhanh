@@ -19,6 +19,13 @@ class UserController extends Controller
     protected $userRole;
     protected $role;
 
+    /**
+     * Create a new user controller instance.
+     *
+     * @param UserRepo     $user     user repository eloquen instance
+     * @param UserRoleRepo $userRole user role repository eloquen instance
+     * @param RoleRepo     $role     role repository eloquen instance
+     */
     public function __construct(UserRepo $user, UserRoleRepo $userRole, RoleRepo $role)
     {
         $this->user = $user;
@@ -26,19 +33,24 @@ class UserController extends Controller
         $this->role = $role;
     }
     /**
+     * Get all activated users.
      *
-     *
-     * @param Data type $parameter Description
-     *
-     * @return Return type
+     * @return \Illuminate\Http\Response;
      */
     public function member()
     {
-        $data['members'] = $this->user->having('activated', 1);
-        // dd($members[10]->roles->where('name', 'Admin')->first());
+        $data['members'] = $this->user->having('activated', \Config::get('common.ACTIVATED'));
+
         return view('backend.users.members')->with($data);
     }
 
+    /**
+     * Ban an account. (soft deleting)
+     *
+     * @param int $id the user's id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function ban($id)
     {
         $result = $this->user->delete($id);
@@ -49,6 +61,14 @@ class UserController extends Controller
         return redirect()->back()->withMessage(trans('backend.users.members.ban_success'));
     }
 
+    /**
+     * Set/unset mod and admin permission.
+     *
+     * @param in      $id      the user's id
+     * @param Request $request the request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function config($id, Request $request)
     {
         $user = $this->user->find($id);
@@ -60,6 +80,14 @@ class UserController extends Controller
         return redirect()->back()->withMessage(trans('backend.users.members.cog_success', ['user' => $user->name]));
     }
 
+    /**
+     * Do seting role job.
+     *
+     * @param int     $id      user's id
+     * @param Request $request the request
+     *
+     * @return void
+     */
     protected function setRole($id, Request $request)
     {
         $roles = $this->role->all();

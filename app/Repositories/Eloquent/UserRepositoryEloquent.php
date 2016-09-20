@@ -25,8 +25,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return User::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      *
@@ -37,6 +35,14 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    /**
+     * Select user accounts with given condition.
+     *
+     * @param string $field data field
+     * @param mixed  $value the value
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function having($field, $value)
     {
         return $this->model

@@ -15,6 +15,8 @@ class UserConfigured extends Event
     /**
      * Create a new event instance.
      *
+     * @param int $id the id of user
+     *
      * @return void
      */
     public function __construct($id)

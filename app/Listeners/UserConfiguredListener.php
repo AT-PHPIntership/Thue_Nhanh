@@ -15,7 +15,7 @@ class UserConfiguredListener
     /**
      * Create the event listener.
      *
-     * @param Vote    $vote    the vote repository eloquent
+     * @param UserRole $userRole the UserRoleRepositoryEloquent instance
      *
      * @return void
      */
@@ -27,7 +27,7 @@ class UserConfiguredListener
     /**
      * Handle the event.
      *
-     * @param PostDeleted $event post deleted event
+     * @param UserConfigured $event user configured event
      *
      * @return void
      */
