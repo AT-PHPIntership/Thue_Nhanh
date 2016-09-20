@@ -10,6 +10,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => ['auth', 'roles'], 'roles' => ['Admin', 'Webmaster', 'Mod']], function () {
         Route::get('/post/waitcensor', ['uses' => 'Backend\PostController@waitCensor', 'as' => 'admin.post.waitcensor']);
     });
+    Route::group(['middleware' => ['auth', 'roles'], 'roles' => ['Admin', 'Webmaster']], function () {
+        Route::get('/user/members', ['uses' => 'Backend\UserController@member', 'as' => 'admin.user.member']);
+
+        Route::post('/user/config/{id?}', ['uses' => 'Backend\UserController@config', 'as' => 'admin.user.config']);
+
+        Route::post('/user/{id?}', ['uses' => 'Backend\UserController@ban', 'as' => 'admin.user.ban']);
+    });
 });
 
 /*

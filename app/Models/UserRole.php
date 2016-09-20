@@ -10,5 +10,5 @@ class UserRole extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $fillable = [];
+    protected $fillable = ['user_id', 'role_id'];
 }

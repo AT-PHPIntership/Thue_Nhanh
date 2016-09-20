@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PostDeleted' => [
             'App\Listeners\PostDeletedListener',
         ],
+        'App\Events\UserConfigured' => [
+            'App\Listeners\UserConfiguredListener',
+        ],
     ];
 
     /**

@@ -25,8 +25,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return User::class;
     }
 
-
-
     /**
      * Boot up the repository, pushing criteria
      *
@@ -35,5 +33,25 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * Select user accounts with given condition.
+     *
+     * @param string $field data field
+     * @param mixed  $value the value
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function having($field, $value)
+    {
+        return $this->model
+                    ->where($field, $value)
+                    ->with('profile')
+                    ->with('roles')
+                    ->join('profiles', 'users.id', '=', 'profiles.user_id')
+                    ->join('cities', 'cities.id', '=', 'profiles.city_id')
+                    ->select('users.id', 'users.name', 'users.created_at', 'users.email', 'cities.name as city')
+                    ->get();
     }
 }
