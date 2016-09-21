@@ -5,7 +5,7 @@
 @endsection
 
 @section('content-header')
-  @lang('backend.posts.waitcensor.title')
+  @lang('backend.users.members.title')
 @endsection
 
 @section('content')

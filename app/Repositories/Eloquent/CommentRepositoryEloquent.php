@@ -56,4 +56,21 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
         }
         return $result;
     }
+
+    /**
+     * Hide (soft delete) all commoment of user who was banned.
+     *
+     * @param int $userID the user's id
+     *
+     * @return void
+     */
+    public function hide($userID)
+    {
+        $comments = $this->model->where('user_id', $userID)->get();
+        if ($comments) {
+            foreach ($comments as $comment) {
+                $comment->delete();
+            }
+        }
+    }
 }

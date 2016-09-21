@@ -18,7 +18,6 @@ function setPermission(url) {
         var role_2 = nextElement.next().val();
         var roleMod = 'mod';
         var roleAdmin = 'admin';
-        var roles = ['mod', 'admin'];
 
         if (roleMod == role_1 || roleMod == role_2) {
             check(modCheckBox);

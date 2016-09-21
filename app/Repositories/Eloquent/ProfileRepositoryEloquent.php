@@ -36,4 +36,16 @@ class ProfileRepositoryEloquent extends BaseRepository implements ProfileReposit
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Hide (soft delete) the profile of user who was banned.
+     *
+     * @param int $id user's id
+     *
+     * @return boolean
+     */
+    public function hide(int $id)
+    {
+        return $this->model->destroy($id);
+    }
 }
