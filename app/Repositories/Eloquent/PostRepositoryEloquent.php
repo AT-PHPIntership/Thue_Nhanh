@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Contracts\Repositories\PostRepository;
 use App\Models\Post;
 use App\Validators\PostValidator;
+use Event;
+use App\Events\PostDeleted;
 
 /**
  * Class PostRepositoryEloquent
@@ -69,5 +71,23 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
                     ->having($field, $value)
                     ->orderBy('created_at', 'desc')
                     ->get();
+    }
+    /**
+     * Hide (soft delete) all posts belong to user who was banned.
+     *
+     * @param int $userID the user's id
+     *
+     * @return void
+     */
+    public function hide($userID)
+    {
+        $posts = $this->model->where('user_id', $userID)->get();
+        if ($posts) {
+            foreach ($posts as $post) {
+                $postID = $post->id;
+                $post->delete();
+                Event::fire(new PostDeleted($postID));
+            }
+        }
     }
 }

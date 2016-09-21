@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Event;
-
+use Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Role;
@@ -12,6 +12,8 @@ use App\Repositories\Eloquent\UserRepositoryEloquent as UserRepo;
 use App\Repositories\Eloquent\UserRoleRepositoryEloquent as UserRoleRepo;
 use App\Repositories\Eloquent\RoleRepositoryEloquent as RoleRepo;
 use App\Events\UserConfigured;
+use App\Events\UserBanned;
+use App\Services\PostServices;
 
 class UserController extends Controller
 {
@@ -53,12 +55,17 @@ class UserController extends Controller
      */
     public function ban($id)
     {
-        $result = $this->user->delete($id);
+        $user = $this->user->find($id);
+        $name = $user->name;
+        if (!$user) {
+            return redirect()->back()->withErrors(trans('backend.users.members.ban_fails'));
+        }
+        Event::fire(new UserBanned($id));
+        $result = $user->delete();
         if (!$result) {
             return redirect()->back()->withErrors(trans('backend.users.members.ban_fails'));
         }
-        // Event::fire(new PostDeleted($id));
-        return redirect()->back()->withMessage(trans('backend.users.members.ban_success'));
+        return redirect()->back()->withMessage(trans('backend.users.members.ban_success', ['user' => $name]));
     }
 
     /**

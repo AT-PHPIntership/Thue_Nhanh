@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserConfigured' => [
             'App\Listeners\UserConfiguredListener',
         ],
+        'App\Events\UserBanned' => [
+            'App\Listeners\UserBannedListener',
+        ],
     ];
 
     /**
