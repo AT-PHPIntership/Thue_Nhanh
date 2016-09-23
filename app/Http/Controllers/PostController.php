@@ -110,8 +110,12 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->all());
+        $data['categories'] = $this->category->orderBy('name')->all();
+        $data['cities'] = $this->city->orderBy('name')->all();
+
         $forRentPosts = $this->post->getPosts(\Config::get('common.FOR_RENT_VAL'));
         $needRentPosts = $this->post->getPosts(\Config::get('common.NEED_RENT_VAL'));
 

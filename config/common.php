@@ -36,4 +36,15 @@ return [
     'ROLE_MOD_VAL'              => 3,
     'ROLE_ADMIN_VAL'            => 2,
     'ROLE_WEBMASTER_VAL'        => 1,
+    'DISTANCE_INF'              => 0,
+    'DISTANCE_1'                => 1,
+    'DISTANCE_3'                => 3,
+    'DISTANCE_5'                => 5,
+    'DISTANCE_10'               => 10,
+    'CATEGORY_DEFAULT'          => 0,
+    'CITY_DEFAULT'              => 0,
+    'ORDER_DEFAULT'             => 'default',
+    'ORDER_DESC'                => 'desc',
+    'ORDER_ASC'                 => 'asc',
+
 ];

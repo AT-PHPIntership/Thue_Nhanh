@@ -1,3 +1,8 @@
+var currPos = {
+    lat: null,
+    lng: null,
+};
+
 function setActiveTab(currentTab) {
     if (currentTab) {
         $('#forRent').attr("class", "tab-pane fade active in");
@@ -30,4 +35,24 @@ function checkUpdate() {
             return false;
         }
     });
+}
+
+function getCurrentPos() {
+    // Get current location. Try HTML5 geolocation.
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            currPos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            setPos();
+        });
+    } else {
+        alert(lang.post.create.unsupport_geolocation);
+    }
+}
+
+function setPos() {
+    $('#currLat').attr('value', currPos.lat);
+    $('#currLng').attr('value', currPos.lng);
 }

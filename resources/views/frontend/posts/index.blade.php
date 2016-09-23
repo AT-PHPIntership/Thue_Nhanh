@@ -11,6 +11,61 @@
         <div class="col-sm-3 well text-center">
         </div>
         <div class="col-sm-7">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default text-left">
+                <div class="panel-body filter-result">
+                  <form action="{{route('post.index')}}" method="get">
+                    <div class="col-md-6 col-sm-12 col-xs-12 filter-item">
+                      <input type="text" class="form-control" name="keyword" placeholder="@lang('frontend.post.index.search_holder')">
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12 filter-item">
+                      <select class="form-control" id="category" name="category">
+                        <option value="{{\Config::get('common.DISTANCE_INF')}}">@lang('frontend.post.index.radius')</option>
+                        <option value="{{\Config::get('common.DISTANCE_1')}}">1km</option>
+                        <option value="{{\Config::get('common.DISTANCE_3')}}">3km</option>
+                        <option value="{{\Config::get('common.DISTANCE_5')}}">5km</option>
+                        <option value="{{\Config::get('common.DISTANCE_10')}}">10km</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12 filter-item">
+                      <button type="submit" class="btn btn-default btn-filter">
+                        <i class="fa fa-search"></i> @lang('frontend.post.index.btn_search')
+                      </button>
+                    </div>
+                    <div class="col-md-5 col-sm-6 col-xs-12 filter-item">
+                      <select class="form-control" id="category" name="category">
+                        <option value="{{\Config::get('common.CATEGORY_DEFAULT')}}">
+                          @lang('frontend.post.index.category_default')
+                        </option>
+                        @foreach($categories as $category)
+                          <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12 filter-item">
+                      <select class="form-control" id="city" name="city">
+                        <option value="{{\Config::get('common.CITY_DEFAULT')}}">@lang('frontend.post.index.city_default')</option>
+                        @foreach($cities as $city)
+                          <option value="{{$city->id}}">{{$city->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 filter-item">
+                      <select class="form-control" id="orderBy" name="orderBy">
+                        <option value="{{\Config::get('common.ORDER_DEFAULT')}}">@lang('frontend.post.index.cost')</option>
+                        <option value="{{\Config::get('common.ORDER_ASC')}}">@lang('frontend.post.index.cost_asc')</option>
+                        <option value="{{\Config::get('common.ORDER_DESC')}}">@lang('frontend.post.index.cost_desc')</option>
+                      </select>
+                    </div>
+                    <input type="hidden" id="currLat" name="lat" value="">
+                    <input type="hidden" id="currLng" name="lng" value="">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
             <ul class="nav nav-tabs nav-tab-padding">
               <li class="forRent-nav"><a href="#forRent" data-toggle="tab" aria-expanded="false">@lang('frontend.post.index.for_rent')</a></li>
               <li class="needRent-nav"><a href="#needRent" data-toggle="tab" aria-expanded="true">@lang('frontend.post.index.need_rent')</a></li>
@@ -141,11 +196,15 @@
 @endpush
 
 @push('scripts')
-<script src="{{asset('/js/frontend/post/main.js')}}"></script>
+  <!--Custom scripts-->
+  <script src="{{asset('/js/frontend/post/main.js')}}"></script>
+  <!-- GoogleMap API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5WpyjImkemkAiHkeZQYqHEc5ybF0uIIg&libraries=places"></script>
 <script>
     $(document).ready(function(){
         var currentTab = {{ session()->get('currentTab') }};
         setActiveTab(currentTab);
     });
+    getCurrentPos();
 </script>
 @endpush
