@@ -23,6 +23,9 @@ use App\Repositories\Eloquent\VoteRepositoryEloquent;
 use App\Repositories\Eloquent\PhotoRepositoryEloquent;
 use App\Repositories\Eloquent\CommentRepositoryEloquent;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
+use App\Criteria\CityCriteria;
+use App\Criteria\CategoryCriteria;
+use App\Criteria\KeywordCriteria;
 
 class PostController extends Controller
 {
@@ -112,17 +115,81 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $data['categories'] = $this->category->orderBy('name')->all();
         $data['cities'] = $this->city->orderBy('name')->all();
 
+        // dd($this->post->all());
+
+        // if ($request->has('city')) {
+        //     $this->post->pushCriteria(new CityCriteria($request->city));
+        // }
+        // if ($request->has('category')) {
+        //     $this->post->pushCriteria(new CategoryCriteria($request->category));
+        // }
+        // if ($request->has('keyword')) {
+        //     $this->post->pushCriteria(new KeywordCriteria($request->keyword));
+        // }
+        // $forRentPosts = $this->post
+        //                     ->with('city')
+        //                     ->with('category')
+        //                     ->with('photos')
+        //                     ->with('votes')
+        //                     ->all()
+        //                     ->where('type', \Config::get('common.FOR_RENT_VAL'));
+        // $needRentPosts = $this->post
+        //                     ->with('city')
+        //                     ->with('category')
+        //                     ->with('photos')
+        //                     ->with('votes')
+        //                     ->all()
+        //                     ->where('type', \Config::get('common.NEED_RENT_VAL'));
+                            // ->get();
+        // dd();
+        // dd($forRentPosts->toArray());
+        // var_dump($forRentPosts);
+
         $forRentPosts = $this->post->getPosts(\Config::get('common.FOR_RENT_VAL'));
         $needRentPosts = $this->post->getPosts(\Config::get('common.NEED_RENT_VAL'));
-
         $data['forRentPosts'] = $forRentPosts->paginate(\Config::get('common.POSTS_PER_PAGE'), ['*'], 'cho_thue');
         $data['needRentPosts'] = $needRentPosts->paginate(\Config::get('common.POSTS_PER_PAGE'), ['*'], 'can_thue');
-
+        // var_dump($data['needRentPosts']);
         return view('frontend.posts.index')->with($data);
+    }
+
+    public function filter(Request $request)
+    {
+        $data['categories'] = $this->category->all();
+        $data['cities'] = $this->city->orderBy('name')->all();
+
+        if ($request->has('city')) {
+            $this->post->pushCriteria(new CityCriteria($request->city));
+        }
+        if ($request->has('category')) {
+            $this->post->pushCriteria(new CategoryCriteria($request->category));
+        }
+        if ($request->has('keyword')) {
+            $this->post->pushCriteria(new KeywordCriteria($request->keyword));
+        }
+
+        $forRentPosts = $this->post
+                            ->with('city')
+                            ->with('category')
+                            ->with('photos')
+                            ->with('votes')
+                            ->all()
+                            ->where('type', \Config::get('common.FOR_RENT_VAL'));
+        $needRentPosts = $this->post
+                            ->with('city')
+                            ->with('category')
+                            ->with('photos')
+                            ->with('votes')
+                            ->all()
+                            ->where('type', \Config::get('common.NEED_RENT_VAL'));
+        $data['forRentPosts'] = $forRentPosts;
+        $data['needRentPosts'] = $needRentPosts;
+        dd($data);
+        return view('frontend.posts.filter_result')->with($data);
     }
 
     /**

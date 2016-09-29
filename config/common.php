@@ -43,8 +43,6 @@ return [
     'DISTANCE_10'               => 10,
     'CATEGORY_DEFAULT'          => 0,
     'CITY_DEFAULT'              => 0,
-    'ORDER_DEFAULT'             => 'default',
-    'ORDER_DESC'                => 'desc',
-    'ORDER_ASC'                 => 'asc',
+    'TYPE_DEFAULT'              => 'default',
 
 ];

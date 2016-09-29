@@ -46,7 +46,8 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository
      */
     public function getPosts($type)
     {
-        return $this->model->with('photos')
+        return $this->model
+                    ->with('photos')
                     ->with('category')
                     ->with('votes')
                     ->with('city')

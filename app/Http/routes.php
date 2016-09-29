@@ -71,4 +71,6 @@ Route::get('/post/{id}', ['uses' => 'PostController@show', 'as' => 'post.show'])
 
 Route::get('/posts', ['uses' => 'PostController@index', 'as' => 'post.index']);
 
+Route::get('/filter', ['uses' => 'PostController@filter', 'as' => 'post.filter']);
+
 Route::get('/{category}/{post}.html', ['uses' => 'PostController@read', 'as' => 'post.read']);
